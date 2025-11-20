@@ -169,6 +169,44 @@ li a.active {
     box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2);
 }
 
+/* CV download button styling */
+.download-cv {
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-cv {
+    background: var(--primary-color);
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(26, 29, 33, 0.12);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.15s ease;
+}
+
+.download-cv .btn-cv:hover,
+.download-cv:hover .btn-cv {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(26, 29, 33, 0.16);
+    opacity: 0.98;
+}
+
+.social .download-cv {
+    margin-left: 0.4rem;
+}
+
+@media (max-width: 600px) {
+    .btn-cv {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
 .images {
     width: 350px;
     height: 350px;

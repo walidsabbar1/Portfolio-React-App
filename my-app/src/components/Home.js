@@ -1,9 +1,12 @@
+import pfp from '../Assets/images/pfp.png';
+import cv from '../Assets/Walid_Sabbar_cv.pdf';
+
 function Home() {
   return (
     <main className="container">
       <div className="main">
         <div className="images">
-          <img src="/pfp.png" alt="Walid Sabbar - Web Developer" className="img-w" />
+          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
         </div>
         <div className="detail">
           <h3>Hi, I'm</h3>
@@ -21,6 +24,9 @@ function Home() {
             </a>
             <a href="https://www.instagram.com/walid_sabbar1" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
               <i className='bx bxl-instagram' aria-hidden="true"></i>
+            </a>
+            <a href={cv} download="Walid_Sabbar_CV.pdf" className="download-cv" aria-label="Download CV">
+              <button type="button" className="btn-cv">Download CV</button>
             </a>
           </div>
         </div>
