@@ -1,8 +1,9 @@
-import { useState, useCallback, lazy, Suspense, useMemo } from 'react';
+import { useState, useCallback, lazy, Suspense, useMemo, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { supabase } from './lib/supabase';
 import './App.css';
 
-// Lazy load components for code splitting (React 19 optimization)
+// Lazy load components for code splitting
 const Home = lazy(() => import('./components/Home'));
 const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
@@ -39,7 +40,7 @@ const NavigationLink = ({ to, children, onNavigate }) => (
 );
 
 // Header component
-const Header = ({ menuOpen, setMenuOpen }) => {
+const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
   const handleMenuToggle = useCallback((e) => {
     setMenuOpen(e.target.checked);
   }, [setMenuOpen]);
@@ -74,6 +75,14 @@ const Header = ({ menuOpen, setMenuOpen }) => {
                 </NavigationLink>
               </li>
             ))}
+            {user && (
+              <li className="user-info">
+                <span>Welcome, {user.email}</span>
+                <button onClick={onLogout} className="logout-btn">
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
@@ -94,19 +103,63 @@ const LoadingFallback = () => (
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Check active sessions and subscribe to auth changes
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Handle logout
+  const handleLogout = useCallback(async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error logging out:', error.message);
+    }
+  }, []);
 
   // Memoize routes for better performance
   const routeElements = useMemo(
     () =>
       routes.map(({ path, Component }) => (
-        <Route key={path} path={path} element={<Component />} />
+        <Route 
+          key={path} 
+          path={path} 
+          element={<Component supabase={supabase} user={user} />} 
+        />
       )),
-    []
+    [user]
   );
+
+  if (loading) {
+    return <LoadingFallback />;
+  }
 
   return (
     <BrowserRouter>
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header 
+        menuOpen={menuOpen} 
+        setMenuOpen={setMenuOpen} 
+        user={user} 
+        onLogout={handleLogout} 
+      />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>{routeElements}</Routes>
       </Suspense>
