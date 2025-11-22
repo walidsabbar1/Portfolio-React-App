@@ -4,11 +4,13 @@ import { supabase } from './lib/supabase';
 import './App.css';
 
 // Lazy load components for code splitting
+const Layout = lazy(() => import('./components/Layout'));
 const Home = lazy(() => import('./components/Home'));
 const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
 const Projects = lazy(() => import('./components/Projects'));
 const Contact = lazy(() => import('./components/Contact'));
+const Footer = lazy(() => import('./components/Footer'));
 
 // Navigation configuration
 const navLinks = [
@@ -139,14 +141,17 @@ function App() {
 
   // Memoize routes for better performance
   const routeElements = useMemo(
-    () =>
-      routes.map(({ path, Component }) => (
-        <Route 
-          key={path} 
-          path={path} 
-          element={<Component supabase={supabase} user={user} />} 
-        />
-      )),
+    () => (
+      <Route element={<Layout />}>
+        {routes.map(({ path, Component }) => (
+          <Route 
+            key={path} 
+            path={path} 
+            element={<Component supabase={supabase} user={user} />} 
+          />
+        ))}
+      </Route>
+    ),
     [user]
   );
 
@@ -164,6 +169,9 @@ function App() {
       />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>{routeElements}</Routes>
+      </Suspense>
+      <Suspense fallback={null}>
+        <Footer />
       </Suspense>
     </BrowserRouter>
   );

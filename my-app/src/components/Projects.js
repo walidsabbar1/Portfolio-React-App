@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import pfp from '../Assets/images/pfp.png';
 
 function Projects({ supabase, user }) {
   const [projects, setProjects] = useState([]);
@@ -28,60 +27,46 @@ function Projects({ supabase, user }) {
 
   if (loading) {
     return (
-      <main className="container">
-        <div className="main">
-          <div className="images">
-            <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
-          </div>
-          <div className="detail">
-            <h1>Projects</h1>
-            <p className="tagline">Loading projects...</p>
-          </div>
-        </div>
-      </main>
+      <div className="detail" style={{ marginTop: 0 }}>
+        <h1>Projects</h1>
+        <p className="tagline">Loading projects...</p>
+      </div>
     );
   }
 
   return (
-    <main className="container">
-      <div className="main">
-        <div className="images">
-          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
-        </div>
-        <div className="detail">
-          <h1>Projects</h1>
-          <p className="tagline">Check out my latest work and projects.</p>
-          
-          <div className="projects-grid">
-            {projects.length > 0 ? (
-              projects.map(project => (
-                <div key={project.id} className="project-card">
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className="project-tech">
-                    {project.technologies?.map(tech => (
-                      <span key={tech} className="tech-tag">{tech}</span>
-                    ))}
-                  </div>
-                  {project.project_url && (
-                    <a 
-                      href={project.project_url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="project-link"
-                    >
-                      View Project
-                    </a>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p>No projects found. Check back soon!</p>
-            )}
-          </div>
-        </div>
+    <div className="detail" style={{ marginTop: 0 }}>
+      <h1>Projects</h1>
+      <p className="tagline">Check out my latest work and projects.</p>
+      
+      <div className="projects-grid">
+        {projects.length > 0 ? (
+          projects.map(project => (
+            <div key={project.id} className="project-card">
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div className="project-tech">
+                {project.technologies?.map(tech => (
+                  <span key={tech} className="tech-tag">{tech}</span>
+                ))}
+              </div>
+              {project.project_url && (
+                <a 
+                  href={project.project_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="project-link"
+                >
+                  View Project
+                </a>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>No projects found. Check back soon!</p>
+        )}
       </div>
-    </main>
+    </div>
   );
 }
 

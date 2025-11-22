@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import pfp from '../Assets/images/pfp.png';
 
 function Contact({ supabase, user }) {
   const [formData, setFormData] = useState({
@@ -53,78 +52,71 @@ function Contact({ supabase, user }) {
   };
 
   return (
-    <main className="container">
-      <div className="main">
-        <div className="images">
-          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
+    <div className="detail" style={{ marginTop: 0 }}>
+      <h1>Contact</h1>
+      <p className="tagline">Get in touch with me. I'll get back to you as soon as possible!</p>
+      
+      {user && (
+        <div className="user-notice">
+          <p>Welcome back, {user.email}! Your messages will be linked to your account.</p>
         </div>
-        <div className="detail">
-          <h1>Contact</h1>
-          <p className="tagline">Get in touch with me. I'll get back to you as soon as possible!</p>
-          
-          {user && (
-            <div className="user-notice">
-              <p>Welcome back, {user.email}! Your messages will be linked to your account.</p>
-            </div>
-          )}
+      )}
 
-          <form onSubmit={handleSubmit} className="contact-form">
-            <div className="form-group">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                disabled={loading}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                disabled={loading}
-              />
-            </div>
-            <div className="form-group">
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                rows="5"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                disabled={loading}
-              />
-            </div>
-            <button 
-              type="submit" 
-              className="submit-btn"
-              disabled={loading}
-            >
-              {loading ? 'Sending...' : 'Send Message'}
-            </button>
-          </form>
-          
-          {success && (
-            <div className="success-message">
-              <p>✅ Message sent successfully! I'll get back to you soon.</p>
-            </div>
-          )}
-          
-          {error && (
-            <div className="error-message">
-              <p>❌ {error}</p>
-            </div>
-          )}
+      <form onSubmit={handleSubmit} className="contact-form">
+        <div className="form-group">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            disabled={loading}
+          />
         </div>
-      </div>
-    </main>
+        <div className="form-group">
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            disabled={loading}
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            name="message"
+            placeholder="Your Message"
+            rows="5"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            disabled={loading}
+          />
+        </div>
+        <button 
+          type="submit" 
+          className="submit-btn"
+          disabled={loading}
+        >
+          {loading ? 'Sending...' : 'Send Message'}
+        </button>
+      </form>
+      
+      {success && (
+        <div className="success-message">
+          <p>✅ Message sent successfully! I'll get back to you soon.</p>
+        </div>
+      )}
+      
+      {error && (
+        <div className="error-message">
+          <p>❌ {error}</p>
+        </div>
+      )}
+    </div>
   );
 }
 
