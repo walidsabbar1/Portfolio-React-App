@@ -50,41 +50,43 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
   }, [setMenuOpen]);
 
   return (
-    <header className="container">
-      <div className="page-header">
-        <div className="logo">
-          <NavLink to="/">Walid Sabbar</NavLink>
-        </div>
-        <input
-          type="checkbox"
-          id="click"
-          checked={menuOpen}
-          onChange={handleMenuToggle}
-        />
-        <label htmlFor="click" className="mainicon" aria-label="Toggle navigation menu">
-          <div className="menu">
-            <i className="bx bx-menu" aria-hidden="true"></i>
+    <header>
+      <div className="header-container">
+        <div className="page-header">
+          <div className="logo">
+            <NavLink to="/">Walid Sabbar</NavLink>
           </div>
-        </label>
-        <nav className={menuOpen ? 'menu-open' : ''}>
-          <ul>
-            {navLinks.map(({ path, label }) => (
-              <li key={path}>
-                <NavigationLink to={path} onNavigate={handleNavClick}>
-                  {label}
-                </NavigationLink>
-              </li>
-            ))}
-            {user && (
-              <li className="user-info">
-                <span>Welcome, {user.email}</span>
-                <button onClick={onLogout} className="logout-btn">
-                  Logout
-                </button>
-              </li>
-            )}
-          </ul>
-        </nav>
+          <input
+            type="checkbox"
+            id="click"
+            checked={menuOpen}
+            onChange={handleMenuToggle}
+          />
+          <label htmlFor="click" className="mainicon" aria-label="Toggle navigation menu">
+            <div className="menu">
+              <i className="bx bx-menu" aria-hidden="true"></i>
+            </div>
+          </label>
+          <nav>
+            <ul className={menuOpen ? 'menu-open' : ''}>
+              {navLinks.map(({ path, label }) => (
+                <li key={path}>
+                  <NavigationLink to={path} onNavigate={handleNavClick}>
+                    {label}
+                  </NavigationLink>
+                </li>
+              ))}
+              {user && (
+                <li className="user-info">
+                  <span>Welcome, {user.email}</span>
+                  <button onClick={onLogout} className="logout-btn">
+                    Logout
+                  </button>
+                </li>
+              )}
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );
@@ -92,13 +94,13 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
 
 // Loading fallback component
 const LoadingFallback = () => (
-  <main className="container">
+  <div className="container">
     <div className="main">
       <div className="detail">
         <p className="tagline">Loading...</p>
       </div>
     </div>
-  </main>
+  </div>
 );
 
 function App() {

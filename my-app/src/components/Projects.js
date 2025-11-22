@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import pfp from '../Assets/images/pfp.png';
 
 function Projects({ supabase, user }) {
   const [projects, setProjects] = useState([]);
@@ -29,6 +30,9 @@ function Projects({ supabase, user }) {
     return (
       <main className="container">
         <div className="main">
+          <div className="images">
+            <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
+          </div>
           <div className="detail">
             <h1>Projects</h1>
             <p className="tagline">Loading projects...</p>
@@ -41,6 +45,9 @@ function Projects({ supabase, user }) {
   return (
     <main className="container">
       <div className="main">
+        <div className="images">
+          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
+        </div>
         <div className="detail">
           <h1>Projects</h1>
           <p className="tagline">Check out my latest work and projects.</p>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import pfp from '../Assets/images/pfp.png';
 
 function Contact({ supabase, user }) {
   const [formData, setFormData] = useState({
@@ -54,6 +55,9 @@ function Contact({ supabase, user }) {
   return (
     <main className="container">
       <div className="main">
+        <div className="images">
+          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
+        </div>
         <div className="detail">
           <h1>Contact</h1>
           <p className="tagline">Get in touch with me. I'll get back to you as soon as possible!</p>

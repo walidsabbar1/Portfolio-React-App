@@ -1,13 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import pfp from '../Assets/images/pfp.png';
 import cv from '../Assets/Walid_Sabbar_cv.pdf';
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
-    <main className="container">
+    <div className="container">
       <div className="main">
-        <div className="images">
-          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
-        </div>
         <div className="detail">
           <h3>Hi, I'm</h3>
           <h1><span>Walid</span> Sabbar</h1>
@@ -29,11 +29,14 @@ function Home() {
               <button type="button" className="btn-cv">Download CV</button>
             </a>
           </div>
+          
+        </div>
+        <div className="images">
+          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
 export default Home;
-
