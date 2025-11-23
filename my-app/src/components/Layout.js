@@ -1,3 +1,4 @@
+// Layout.js
 import { Outlet } from 'react-router-dom';
 import pfp from '../Assets/images/pfp.png';
 
@@ -7,7 +8,9 @@ function Layout() {
       <div className="main">
         <Outlet />
         <div className="images fixed-image">
-          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
+          <div className="profile-frame">
+            <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
+          </div>
         </div>
       </div>
     </div>
@@ -15,4 +18,3 @@ function Layout() {
 }
 
 export default Layout;
-

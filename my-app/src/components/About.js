@@ -1,3 +1,4 @@
+// About.js
 import { useEffect, useState } from 'react';
 
 function About({ supabase, user }) {
@@ -6,7 +7,6 @@ function About({ supabase, user }) {
   useEffect(() => {
     const trackVisit = async () => {
       try {
-        // Track page visit
         const { data, error } = await supabase
           .from('page_visits')
           .insert([
@@ -19,7 +19,6 @@ function About({ supabase, user }) {
 
         if (error) throw error;
 
-        // Get total visits count
         const { count, error: countError } = await supabase
           .from('page_visits')
           .select('*', { count: 'exact', head: true })
@@ -34,15 +33,16 @@ function About({ supabase, user }) {
     };
 
     trackVisit();
+    document.body.classList.add('page-loaded');
   }, [supabase, user]);
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>
-      <h1>About Me</h1>
-      <p className="tagline">Learn more about my journey and passion for web development.</p>
+      <h1 className="animate-slide-up">About Me</h1>
+      <p className="tagline animate-slide-up">Learn more about my journey and passion for web development.</p>
       
       <div className="about-cards">
-        <div className="about-card">
+        <div className="about-card animate-card" style={{animationDelay: '0.1s'}}>
           <div className="about-card-icon">
             <i className='bx bx-user'></i>
           </div>
@@ -55,7 +55,7 @@ function About({ supabase, user }) {
           </p>
         </div>
 
-        <div className="about-card">
+        <div className="about-card animate-card" style={{animationDelay: '0.2s'}}>
           <div className="about-card-icon">
             <i className='bx bx-book'></i>
           </div>
@@ -70,7 +70,7 @@ function About({ supabase, user }) {
           </div>
         </div>
 
-        <div className="about-card">
+        <div className="about-card animate-card" style={{animationDelay: '0.3s'}}>
           <div className="about-card-icon">
             <i className='bx bx-heart'></i>
           </div>
@@ -88,7 +88,7 @@ function About({ supabase, user }) {
           </div>
         </div>
         
-        <div className="about-card about-card-stats">
+        <div className="about-card about-card-stats animate-card" style={{animationDelay: '0.4s'}}>
           <div className="about-card-icon">
             <i className='bx bx-bar-chart-alt-2'></i>
           </div>
