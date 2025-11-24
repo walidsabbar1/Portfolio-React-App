@@ -2,9 +2,9 @@ import { useState, useCallback, lazy, Suspense, useMemo, useEffect } from 'react
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { supabase } from './lib/supabase';
 import './App.css';
+import pfp from './Assets/images/pfpwebp.webp';
 
 // Lazy load components for code splitting
-const Layout = lazy(() => import('./components/Layout'));
 const Home = lazy(() => import('./components/Home'));
 const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
@@ -23,11 +23,11 @@ const navLinks = [
 
 // Routes configuration
 const routes = [
-  { path: '/', Component: Home },
-  { path: '/about', Component: About },
-  { path: '/skills', Component: Skills },
-  { path: '/projects', Component: Projects },
-  { path: '/contact', Component: Contact },
+  { path: '/', Component: Home, showProfile: true },
+  { path: '/about', Component: About, showProfile: false },
+  { path: '/skills', Component: Skills, showProfile: false },
+  { path: '/projects', Component: Projects, showProfile: false },
+  { path: '/contact', Component: Contact, showProfile: false },
 ];
 
 // Reusable NavLink component
@@ -40,6 +40,163 @@ const NavigationLink = ({ to, children, onNavigate }) => (
     {children}
   </NavLink>
 );
+
+// Page Wrapper Component
+const PageWrapper = ({ children, showProfile = false }) => (
+  <div className="container">
+    <div className="main">
+      {children}
+      {showProfile && (
+        <div className="images fixed-image">
+          <img src={pfp} alt="Walid Sabbar - Web Developer" className="img-w" />
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+// LinkedIn-style Skeleton Loading Components
+const SkeletonHome = () => (
+  <PageWrapper showProfile={false}> {/* Don't show actual profile in skeleton */}
+    <div className="detail home-animate">
+      <div className="skeleton skeleton-text" style={{width: '100px'}}></div>
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-tagline"></div>
+      <div className="skeleton-social">
+        {[1, 2, 3, 4, 5].map(i => (
+          <div key={i} className="skeleton skeleton-button"></div>
+        ))}
+      </div>
+    </div>
+    {/* Only show skeleton profile, not actual image */}
+    <div className="skeleton-profile-container fixed-image">
+      <div className="skeleton-profile-image"></div>
+    </div>
+  </PageWrapper>
+);
+const SkeletonAbout = () => (
+  <PageWrapper>
+    <div className="detail">
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-tagline"></div>
+      <div className="skeleton-grid skeleton-grid-cards">
+        {[1, 2, 3, 4].map(i => (
+          <div key={i} className="skeleton skeleton-card-medium">
+            <div style={{ padding: '2rem' }}>
+              <div className="skeleton skeleton-icon"></div>
+              <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
+              <div className="skeleton skeleton-text"></div>
+              <div className="skeleton skeleton-text"></div>
+              <div className="skeleton skeleton-text" style={{width: '80%'}}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </PageWrapper>
+);
+
+const SkeletonSkills = () => (
+  <PageWrapper>
+    <div className="detail">
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-tagline"></div>
+      <div className="skills-minimal">
+        {[1, 2, 3, 4, 5].map(category => (
+          <div key={category} className="skill-category">
+            <div className="skeleton skeleton-text" style={{width: '40%', height: '1.5rem'}}></div>
+            <div className="skeleton-grid skeleton-grid-skills">
+              {[1, 2, 3].map(skill => (
+                <div key={skill} className="skeleton skeleton-card-small">
+                  <div style={{ padding: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                      <div className="skeleton skeleton-circle-small"></div>
+                      <div style={{ flex: 1 }}>
+                        <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
+                        <div className="skeleton skeleton-text-sm" style={{width: '40%'}}></div>
+                      </div>
+                    </div>
+                    <div className="skeleton skeleton-progress"></div>
+                    <div className="skeleton skeleton-text-sm" style={{width: '20%'}}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </PageWrapper>
+);
+
+const SkeletonProjects = () => (
+  <PageWrapper>
+    <div className="detail">
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-tagline"></div>
+      <div className="skeleton-grid skeleton-grid-cards">
+        {[1, 2, 3, 4].map(i => (
+          <div key={i} className="skeleton skeleton-card-medium">
+            <div style={{ padding: '1.5rem' }}>
+              <div className="skeleton skeleton-text" style={{width: '70%', marginBottom: '1rem'}}></div>
+              <div className="skeleton skeleton-text"></div>
+              <div className="skeleton skeleton-text" style={{width: '90%'}}></div>
+              <div style={{ display: 'flex', gap: '0.5rem', margin: '1rem 0' }}>
+                <div className="skeleton skeleton-text-sm" style={{width: '60px'}}></div>
+                <div className="skeleton skeleton-text-sm" style={{width: '50px'}}></div>
+                <div className="skeleton skeleton-text-sm" style={{width: '70px'}}></div>
+              </div>
+              <div className="skeleton skeleton-text-sm" style={{width: '30%'}}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </PageWrapper>
+);
+
+const SkeletonContact = () => (
+  <PageWrapper>
+    <div className="detail">
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-tagline"></div>
+      <div className="contact-container">
+        <div className="skeleton skeleton-card-large">
+          <div style={{ padding: '2rem' }}>
+            <div className="skeleton skeleton-text" style={{width: '40%', marginBottom: '1.5rem'}}></div>
+            {[1, 2, 3].map(i => (
+              <div key={i} className="skeleton skeleton-contact-item"></div>
+            ))}
+          </div>
+        </div>
+        <div className="skeleton skeleton-card-large">
+          <div style={{ padding: '2rem' }}>
+            <div className="skeleton skeleton-text" style={{width: '60%', marginBottom: '1rem'}}></div>
+            <div className="skeleton skeleton-form-input"></div>
+            <div className="skeleton skeleton-form-input"></div>
+            <div className="skeleton skeleton-form-textarea"></div>
+            <div className="skeleton skeleton-form-input" style={{width: '50%', height: '3.5rem'}}></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </PageWrapper>
+);
+
+// Loading fallback component
+const LoadingFallback = ({ route }) => {
+  const skeletonComponents = {
+    '/': SkeletonHome,
+    '/about': SkeletonAbout,
+    '/skills': SkeletonSkills,
+    '/projects': SkeletonProjects,
+    '/contact': SkeletonContact,
+  };
+
+  const SkeletonComponent = skeletonComponents[route] || SkeletonAbout;
+  
+  return <SkeletonComponent />;
+};
 
 // Header component
 const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
@@ -94,21 +251,11 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
   );
 };
 
-// Loading fallback component
-const LoadingFallback = () => (
-  <div className="container">
-    <div className="main">
-      <div className="detail">
-        <p className="tagline">Loading...</p>
-      </div>
-    </div>
-  </div>
-);
-
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentPath, setCurrentPath] = useState('/');
 
   // Check active sessions and subscribe to auth changes
   useEffect(() => {
@@ -126,7 +273,17 @@ function App() {
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    // Track current path for loading states
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   // Handle logout
@@ -139,24 +296,43 @@ function App() {
     }
   }, []);
 
-  // Memoize routes for better performance
-  const routeElements = useMemo(
-    () => (
-      <Route element={<Layout />}>
-        {routes.map(({ path, Component }) => (
-          <Route 
-            key={path} 
-            path={path} 
-            element={<Component supabase={supabase} user={user} />} 
-          />
-        ))}
-      </Route>
-    ),
-    [user]
-  );
+  // In App.js, update the routeElements to remove user prop from Contact
+const routeElements = useMemo(
+  () => routes.map(({ path, Component, showProfile }) => (
+    <Route 
+      key={path} 
+      path={path} 
+      element={
+        <Suspense fallback={<LoadingFallback route={path} />}>
+          <PageWrapper showProfile={showProfile}>
+            {Component === Contact ? (
+              <Component />
+            ) : (
+              <Component supabase={supabase} user={user} />
+            )}
+          </PageWrapper>
+        </Suspense>
+      } 
+    />
+  )),
+  [user, supabase]
+);
 
   if (loading) {
-    return <LoadingFallback />;
+    return (
+      <BrowserRouter>
+        <Header 
+          menuOpen={menuOpen} 
+          setMenuOpen={setMenuOpen} 
+          user={user} 
+          onLogout={handleLogout} 
+        />
+        <LoadingFallback route={currentPath} />
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
+      </BrowserRouter>
+    );
   }
 
   return (
@@ -167,9 +343,9 @@ function App() {
         user={user} 
         onLogout={handleLogout} 
       />
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>{routeElements}</Routes>
-      </Suspense>
+      <Routes>
+        {routeElements}
+      </Routes>
       <Suspense fallback={null}>
         <Footer />
       </Suspense>

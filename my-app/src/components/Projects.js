@@ -7,6 +7,9 @@ function Projects({ supabase, user }) {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        // Simulate loading for better UX demonstration
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
         const { data, error } = await supabase
           .from('projects')
           .select('*')
@@ -29,7 +32,25 @@ function Projects({ supabase, user }) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
         <h1>Projects</h1>
-        <p className="tagline">Loading projects...</p>
+        <p className="tagline">Check out my latest work and projects.</p>
+        
+        <div className="skeleton-grid skeleton-grid-cards">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="skeleton skeleton-card-medium">
+              <div style={{ padding: '1.5rem' }}>
+                <div className="skeleton skeleton-text" style={{width: '70%', marginBottom: '1rem'}}></div>
+                <div className="skeleton skeleton-text"></div>
+                <div className="skeleton skeleton-text" style={{width: '90%'}}></div>
+                <div style={{ display: 'flex', gap: '0.5rem', margin: '1rem 0' }}>
+                  <div className="skeleton skeleton-text-sm" style={{width: '60px'}}></div>
+                  <div className="skeleton skeleton-text-sm" style={{width: '50px'}}></div>
+                  <div className="skeleton skeleton-text-sm" style={{width: '70px'}}></div>
+                </div>
+                <div className="skeleton skeleton-text-sm" style={{width: '30%'}}></div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

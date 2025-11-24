@@ -1,8 +1,8 @@
 // Contact.js
 import { useState, useEffect } from 'react';
-import { FaUser, FaEnvelope, FaPaperPlane, FaMapMarkerAlt, FaPhone, FaClock } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaPaperPlane, FaMapMarkerAlt, FaClock, FaCheck, FaTimes } from 'react-icons/fa';
 
-function Contact({ supabase, user }) {
+function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,7 +10,8 @@ function Contact({ supabase, user }) {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
+  const [buttonVibrate, setButtonVibrate] = useState(false);
 
   useEffect(() => {
     document.body.classList.add('page-loaded');
@@ -19,31 +20,53 @@ function Contact({ supabase, user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError(false);
+    setSuccess(false);
+    setButtonVibrate(false);
+
+    // Formspree endpoint - replace with your actual form ID
+    const formspreeEndpoint = 'https://formspree.io/f/mwpjoeqr';
 
     try {
-      const { data, error } = await supabase
-        .from('contacts')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            message: formData.message,
-            user_id: user?.id || null,
-            created_at: new Date().toISOString()
-          }
-        ])
-        .select();
+      const response = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Portfolio Contact - ${formData.name}`,
+          _replyto: formData.email,
+        }),
+      });
 
-      if (error) throw error;
-
-      setSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
-      
-      setTimeout(() => setSuccess(false), 3000);
+      if (response.ok) {
+        setSuccess(true);
+        setFormData({ name: '', email: '', message: '' });
+        
+        // Reset success state after 5 seconds
+        setTimeout(() => {
+          setSuccess(false);
+        }, 5000);
+      } else {
+        throw new Error('Failed to send message');
+      }
     } catch (error) {
-      console.error('Error saving contact:', error.message);
-      setError('Failed to send message. Please try again.');
+      console.error('Contact form error:', error);
+      setError(true);
+      setButtonVibrate(true);
+      
+      // Stop vibration after 1 second
+      setTimeout(() => {
+        setButtonVibrate(false);
+      }, 1000);
+      
+      // Reset error state after 5 seconds
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
     } finally {
       setLoading(false);
     }
@@ -54,6 +77,54 @@ function Contact({ supabase, user }) {
       ...prev,
       [e.target.name]: e.target.value
     }));
+  };
+
+  // Get button content based on state
+  const getButtonContent = () => {
+    if (loading) {
+      return (
+        <>
+          <div className="loading-spinner"></div>
+          Sending...
+        </>
+      );
+    }
+    
+    if (success) {
+      return (
+        <>
+          <FaCheck className="btn-icon" />
+          Sent Successfully!
+        </>
+      );
+    }
+    
+    if (error) {
+      return (
+        <>
+          <FaTimes className="btn-icon" />
+          Failed - Try Again
+        </>
+      );
+    }
+    
+    return (
+      <>
+        <FaPaperPlane className="btn-icon" />
+        Send Message
+      </>
+    );
+  };
+
+  // Get button class based on state
+  const getButtonClass = () => {
+    let className = "submit-btn with-icon";
+    
+    if (success) className += " btn-success";
+    if (error) className += " btn-error";
+    if (buttonVibrate) className += " vibrate";
+    
+    return className;
   };
 
   return (
@@ -75,7 +146,9 @@ function Contact({ supabase, user }) {
             <FaEnvelope className="contact-icon" />
             <div>
               <strong>Email</strong>
-              <p>walid.sabbar@example.com</p>
+              <a href="mailto:wsabbar20@gmail.com" style={{color: 'inherit', textDecoration: 'none'}}>
+                <p>wsabbar20@gmail.com</p>
+              </a>
             </div>
           </div>
           <div className="contact-item">
@@ -88,12 +161,6 @@ function Contact({ supabase, user }) {
         </div>
 
         <div className="contact-form-wrapper animate-card" style={{animationDelay: '0.3s'}}>
-          {user && (
-            <div className="user-notice">
-              <p>Welcome back, {user.email}! Your messages will be linked to your account.</p>
-            </div>
-          )}
-
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="form-group">
               <div className="input-with-icon">
@@ -105,7 +172,7 @@ function Contact({ supabase, user }) {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  disabled={loading}
+                  disabled={loading || success}
                 />
               </div>
             </div>
@@ -120,7 +187,7 @@ function Contact({ supabase, user }) {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  disabled={loading}
+                  disabled={loading || success}
                 />
               </div>
             </div>
@@ -133,40 +200,20 @@ function Contact({ supabase, user }) {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                disabled={loading}
+                disabled={loading || success}
               />
             </div>
             
             <button 
               type="submit" 
-              className="submit-btn with-icon"
-              disabled={loading}
+              className={getButtonClass()}
+              disabled={loading || success}
             >
-              {loading ? (
-                <>
-                  <div className="loading-spinner"></div>
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <FaPaperPlane className="btn-icon" />
-                  Send Message
-                </>
-              )}
+              {getButtonContent()}
             </button>
           </form>
           
-          {success && (
-            <div className="success-message">
-              <p>✅ Message sent successfully! I'll get back to you soon.</p>
-            </div>
-          )}
-          
-          {error && (
-            <div className="error-message">
-              <p>❌ {error}</p>
-            </div>
-          )}
+          {/* Removed the success and error message blocks */}
         </div>
       </div>
     </div>

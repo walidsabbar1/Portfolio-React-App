@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 function About({ supabase, user }) {
   const [visitCount, setVisitCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const trackVisit = async () => {
@@ -29,12 +30,41 @@ function About({ supabase, user }) {
         setVisitCount(count || 0);
       } catch (error) {
         console.error('Error tracking visit:', error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    trackVisit();
+    // Simulate loading for better UX demonstration
+    setTimeout(() => {
+      trackVisit();
+    }, 800);
+    
     document.body.classList.add('page-loaded');
   }, [supabase, user]);
+
+  if (loading) {
+    return (
+      <div className="detail" style={{ marginTop: 0 }}>
+        <h1>About Me</h1>
+        <p className="tagline">Learn more about my journey and passion for web development.</p>
+        
+        <div className="skeleton-grid skeleton-grid-cards">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="skeleton skeleton-card-medium">
+              <div style={{ padding: '2rem' }}>
+                <div className="skeleton skeleton-icon"></div>
+                <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
+                <div className="skeleton skeleton-text"></div>
+                <div className="skeleton skeleton-text"></div>
+                <div className="skeleton skeleton-text" style={{width: '80%'}}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>

@@ -1,5 +1,5 @@
 // Skills.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, 
   FaGitAlt, FaGithub, FaTasks, FaFileExcel
@@ -8,47 +8,52 @@ import {
   SiPhp, SiLaravel, SiMysql, SiMongodb 
 } from 'react-icons/si';
 
-function Skills() {
-  const skillCategories = [
-    {
-      title: "Foundation",
-      skills: [
-        { name: "HTML", level: 5, icon: <FaHtml5 />, color: "#E34F26" },
-        { name: "CSS", level: 5, icon: <FaCss3Alt />, color: "#1572B6" },
-        { name: "JavaScript", level: 5, icon: <FaJs />, color: "#F7DF1E" }
-      ]
-    },
-    {
-      title: "Frontend",
-      skills: [
-        { name: "React.js", level: 8, icon: <FaReact />, color: "#61DAFB" }
-      ]
-    },
-    {
-      title: "Backend",
-      skills: [
-        { name: "Node.js", level: 6, icon: <FaNodeJs />, color: "#339933" },
-        { name: "PHP", level: 6, icon: <SiPhp />, color: "#777BB4" },
-        { name: "Laravel", level: 7, icon: <SiLaravel />, color: "#FF2D20" }
-      ]
-    },
-    {
-      title: "Database",
-      skills: [
-        { name: "SQL", level: 6, icon: <SiMysql />, color: "#4479A1" },
-        { name: "MongoDB", level: 4, icon: <SiMongodb />, color: "#47A248" }
-      ]
-    },
-    {
-      title: "Tools",
-      skills: [
-        { name: "Git", level: 7, icon: <FaGitAlt />, color: "#F05032" },
-        { name: "GitHub", level: 7, icon: <FaGithub />, color: "#181717" },
-        { name: "Agile", level: 6, icon: <FaTasks />, color: "#6366f1" },
-        { name: "Office", level: 5, icon: <FaFileExcel />, color: "#217346" }
-      ]
+// Icon mapping
+const iconComponents = {
+  FaHtml5: FaHtml5,
+  FaCss3Alt: FaCss3Alt,
+  FaJs: FaJs,
+  FaReact: FaReact,
+  FaNodeJs: FaNodeJs,
+  FaGitAlt: FaGitAlt,
+  FaGithub: FaGithub,
+  FaTasks: FaTasks,
+  FaFileExcel: FaFileExcel,
+  SiPhp: SiPhp,
+  SiLaravel: SiLaravel,
+  SiMysql: SiMysql,
+  SiMongodb: SiMongodb
+};
+
+function Skills({ supabase, user }) {
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchSkills();
+  }, [supabase]);
+
+  const fetchSkills = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('skills')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      setSkills(data || []);
+      
+      // Extract unique categories
+      const uniqueCategories = [...new Set(data?.map(skill => skill.category) || [])];
+      setCategories(uniqueCategories);
+    } catch (error) {
+      console.error('Error fetching skills:', error.message);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   const getLevelColor = (level) => {
     if (level >= 8) return "var(--color-adv)";
@@ -62,59 +67,105 @@ function Skills() {
     return "Basic";
   };
 
+  const getIconComponent = (iconName) => {
+    return iconComponents[iconName] || FaJs; // Default icon
+  };
+
+  if (loading) {
+    return (
+      <div className="detail" style={{ marginTop: 0 }}>
+        <h1>Skills</h1>
+        <p className="tagline">Technologies I work with</p>
+        
+        <div className="skills-minimal">
+          {[1, 2, 3, 4, 5].map(category => (
+            <div key={category} className="skill-category">
+              <div className="skeleton skeleton-text" style={{width: '40%', height: '1.5rem', marginBottom: '1.5rem'}}></div>
+              <div className="skeleton-grid skeleton-grid-skills">
+                {[1, 2, 3].map(skill => (
+                  <div key={skill} className="skeleton skeleton-card-small">
+                    <div style={{ padding: '1.5rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                        <div className="skeleton skeleton-circle-small"></div>
+                        <div style={{ flex: 1 }}>
+                          <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
+                          <div className="skeleton skeleton-text-sm" style={{width: '40%'}}></div>
+                        </div>
+                      </div>
+                      <div className="skeleton skeleton-progress"></div>
+                      <div className="skeleton skeleton-text-sm" style={{width: '20%'}}></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="detail" style={{ marginTop: 0 }}>
       <h1>Skills</h1>
       <p className="tagline">Technologies I work with</p>
       
       <div className="skills-minimal">
-        {skillCategories.map((category, categoryIndex) => (
-          <div key={category.title} className="skill-category">
-            <h3 className="category-title">{category.title}</h3>
-            <div className="skills-grid">
-              {category.skills.map((skill, skillIndex) => (
-                <div 
-                  key={skill.name}
-                  className="skill-card"
-                  style={{ 
-                    animationDelay: `${(categoryIndex * 0.2) + (skillIndex * 0.1)}s` 
-                  }}
-                >
-                  <div className="skill-header">
-                    <div 
-                      className="skill-icon"
-                      style={{ color: skill.color }}
-                    >
-                      {skill.icon}
-                    </div>
-                    <div className="skill-info">
-                      <span className="skill-name">{skill.name}</span>
-                      <span 
-                        className="skill-level"
-                        style={{ color: getLevelColor(skill.level) }}
-                      >
-                        {getLevelLabel(skill.level)}
-                      </span>
-                    </div>
-                  </div>
+        {categories.map((category, categoryIndex) => {
+          const categorySkills = skills.filter(skill => skill.category === category);
+          
+          return (
+            <div key={category} className="skill-category">
+              <h3 className="category-title">{category}</h3>
+              <div className="skills-grid">
+                {categorySkills.map((skill, skillIndex) => {
+                  const IconComponent = getIconComponent(skill.icon_name);
                   
-                  <div className="skill-progress">
-                    <div className="progress-bar">
-                      <div 
-                        className="progress-fill"
-                        style={{ 
-                          width: `${(skill.level / 10) * 100}%`,
-                          backgroundColor: getLevelColor(skill.level)
-                        }}
-                      ></div>
+                  return (
+                    <div 
+                      key={skill.id}
+                      className="skill-card"
+                      style={{ 
+                        animationDelay: `${(categoryIndex * 0.2) + (skillIndex * 0.1)}s` 
+                      }}
+                    >
+                      <div className="skill-header">
+                        <div 
+                          className="skill-icon"
+                          style={{ color: skill.color }}
+                        >
+                          <IconComponent />
+                        </div>
+                        <div className="skill-info">
+                          <span className="skill-name">{skill.name}</span>
+                          <span 
+                            className="skill-level"
+                            style={{ color: getLevelColor(skill.level) }}
+                          >
+                            {getLevelLabel(skill.level)}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="skill-progress">
+                        <div className="progress-bar">
+                          <div 
+                            className="progress-fill"
+                            style={{ 
+                              width: `${(skill.level / 10) * 100}%`,
+                              backgroundColor: getLevelColor(skill.level)
+                            }}
+                          ></div>
+                        </div>
+                        <span className="progress-text">Lvl {skill.level}</span>
+                      </div>
                     </div>
-                    <span className="progress-text">Lvl {skill.level}</span>
-                  </div>
-                </div>
-              ))}
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
