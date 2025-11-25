@@ -1,10 +1,14 @@
 // Home.js
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../utils/translations';
 import cv from '../Assets/Walid_Sabbar_cv.pdf';
 
 function Home() {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = translations[language];
 
   useEffect(() => {
     document.body.classList.add('page-loaded');
@@ -12,14 +16,14 @@ function Home() {
 
   return (
     <div className="detail home-animate">
-      <h3 className="animate-slide-up home-intro">Hi, I'm</h3>
+      <h3 className="animate-slide-up home-intro">{t.welcome}</h3>
       
       <h1 className="animate-slide-left home-title">
         <span className="name-highlight">Walid</span> Sabbar
       </h1>
       
       <p className="tagline animate-scale-in home-tagline">
-        Web Developer & Creative Problem Solver
+        {t.tagline}
       </p>
       
       <div className="social animate-fade-in home-social">
@@ -67,7 +71,7 @@ function Home() {
           href={cv} 
           download="Walid_Sabbar_CV.pdf" 
           className="download-cv social-item home-social-item" 
-          aria-label="Download CV"
+          aria-label={t.downloadCv}
         >
           <i className='bx bx-download download-icon' aria-hidden="true"></i>
         </a>

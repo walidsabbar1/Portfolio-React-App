@@ -1,8 +1,13 @@
+// Projects.js
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../utils/translations';
 
 function Projects({ supabase, user }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -31,8 +36,8 @@ function Projects({ supabase, user }) {
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
-        <h1>Projects</h1>
-        <p className="tagline">Check out my latest work and projects.</p>
+        <h1>{t.projectsTitle}</h1>
+        <p className="tagline">{t.projectsTagline}</p>
         
         <div className="skeleton-grid skeleton-grid-cards">
           {[1, 2, 3, 4].map(i => (
@@ -57,8 +62,8 @@ function Projects({ supabase, user }) {
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>
-      <h1>Projects</h1>
-      <p className="tagline">Check out my latest work and projects.</p>
+      <h1>{t.projectsTitle}</h1>
+      <p className="tagline">{t.projectsTagline}</p>
       
       <div className="projects-grid">
         {projects.length > 0 ? (
@@ -78,13 +83,13 @@ function Projects({ supabase, user }) {
                   rel="noopener noreferrer"
                   className="project-link"
                 >
-                  View Project
+                  {t.viewProject}
                 </a>
               )}
             </div>
           ))
         ) : (
-          <p>No projects found. Check back soon!</p>
+          <p>{t.noProjects}</p>
         )}
       </div>
     </div>

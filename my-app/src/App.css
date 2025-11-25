@@ -12,6 +12,7 @@
     --color-inter: #6366f1;
     --success-soft: #059669;
     --error-soft: #dc2626;
+    --color-adv: #10b981;
     --skeleton-bg: #f3f3f3;
     --skeleton-shine: rgba(255, 255, 255, 0.6);
 }
@@ -23,7 +24,7 @@
 }
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;    
-    background: linear-gradient(135deg, var(--white) 70%, var(--black) 30%) fixed;
+    background: linear-gradient(135deg, var(--white) 68%, var(--black) 32%) fixed;
     min-height: 100vh;
     color: var(--white);
     overflow-x: hidden;
@@ -397,7 +398,6 @@ nav li a.active {
 }
 .images.fixed-image {
     position: sticky;
-    top: 100px;
     align-self: start;
 }
 .images img {
@@ -652,8 +652,44 @@ nav li a.active {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Skills Layout with Animation on Left */
+.skills-layout-container {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 3rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.skills-animation-left {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(26, 29, 33, 0.08);
+  height: fit-content;
+  min-height: 500px;
+  transition: all 0.3s ease;
+}
+
+.skills-lottie-animation {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+}
+
+.skills-content-right {
+  padding: 0 1rem;
+}
+
 .skills-minimal {
-    margin-top: 2rem;
+  margin-top: 0;
 }
 .skill-category {
     margin-bottom: 3rem;
@@ -727,16 +763,19 @@ nav li a.active {
     gap: 1rem;
 }
 .progress-bar {
-    flex: 1;
-    height: 6px;
-    background: rgba(26, 29, 33, 0.1);
-    border-radius: 3px;
-    overflow: hidden;
+  flex: 1;
+  height: 6px;
+  background: rgba(26, 29, 33, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
 }
+
 .progress-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.8s ease-out;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease-out;
+  min-width: 6px; 
 }
 .progress-text {
     font-size: 0.8rem;
@@ -881,7 +920,14 @@ nav li a.active {
     backface-visibility: hidden;
 }
 
-/* Responsive styles for skeleton */
+/* Responsive styles for skills layout */
+@media (max-width: 1200px) {
+  .skills-layout-container {
+    grid-template-columns: 35% 65%;
+    gap: 2.5rem;
+  }
+}
+
 @media (max-width: 1024px) {
     .header-container, .container, .footer-container { padding: 0 2rem; }
     .main { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
@@ -892,6 +938,27 @@ nav li a.active {
     }
     .social { justify-content: center; }
     .contact-container { grid-template-columns: 1fr; gap: 2rem; }
+    
+    .skills-layout-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .skills-animation-left {
+        position: relative;
+        top: 0;
+        max-width: 500px;
+        margin: 0 auto;
+        min-height: 400px;
+    }
+    
+    .skills-lottie-animation {
+        max-height: 400px;
+    }
+    
+    .skills-content-right {
+        padding: 0;
+    }
 }
 @media (max-width: 768px) {
     .header-container, .container, .footer-container { padding: 0 1.5rem; }
@@ -911,6 +978,15 @@ nav li a.active {
     .skill-name { font-size: 1rem; }
     .contact-info, .contact-form-wrapper { padding: 1.5rem; }
     .submit-btn { width: 100%; }
+    
+    .skills-animation-left {
+        min-height: 350px;
+        padding: 1.5rem;
+    }
+    
+    .skills-lottie-animation {
+        max-height: 350px;
+    }
 }
 @media (max-width: 600px) {
     .header-container, .container, .footer-container { padding: 0 1rem; }
@@ -945,6 +1021,16 @@ nav li a.active {
     }
     nav ul.menu-open { left: 0; }
     #click:checked ~ nav ul { left: 0; }
+    
+    .skills-animation-left {
+        min-height: 300px;
+        padding: 1rem;
+        border-radius: 12px;
+    }
+    
+    .skills-lottie-animation {
+        max-height: 300px;
+    }
 }
 /* Add to :root */
 :root {
@@ -1194,4 +1280,98 @@ nav li a.active {
 
 .submit-btn.btn-error:focus {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+}
+
+/* Animation enhancements */
+.skills-animation-left:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Ensure skills minimal layout adjusts properly */
+.skills-minimal {
+  width: 100%;
+}
+
+.skill-category {
+  width: 100%;
+}
+
+.skills-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+/* Education and Experience Items */
+.education-item, .experience-item {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(26, 29, 33, 0.1);
+}
+
+.education-item:last-child, .experience-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.education-period, .experience-period {
+  color: var(--color-inter);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.about-card-subtitle {
+  color: var(--black);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+/* Enhanced about card content */
+.about-card-content {
+  width: 100%;
+}
+.language-toggle {
+  margin-left: 1rem;
+}
+
+.language-btn {
+  background: var(--white);
+  color: var(--black);
+  border: 2px solid var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  min-width: 50px;
+}
+
+.language-btn:hover {
+  background: var(--black);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Update navigation for language toggle */
+nav ul {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  align-items: center;
+}
+
+/* Responsive styles for language toggle */
+@media (max-width: 600px) {
+  .language-toggle {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+  
+  .language-btn {
+    width: 100%;
+    text-align: center;
+  }
 }

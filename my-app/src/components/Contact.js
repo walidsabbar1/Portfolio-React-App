@@ -1,6 +1,8 @@
 // Contact.js
 import { useState, useEffect } from 'react';
 import { FaUser, FaEnvelope, FaPaperPlane, FaMapMarkerAlt, FaClock, FaCheck, FaTimes } from 'react-icons/fa';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../utils/translations';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ function Contact() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [buttonVibrate, setButtonVibrate] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   useEffect(() => {
     document.body.classList.add('page-loaded');
@@ -85,7 +89,7 @@ function Contact() {
       return (
         <>
           <div className="loading-spinner"></div>
-          Sending...
+          {t.sending}
         </>
       );
     }
@@ -94,7 +98,7 @@ function Contact() {
       return (
         <>
           <FaCheck className="btn-icon" />
-          Sent Successfully!
+          {t.sentSuccessfully}
         </>
       );
     }
@@ -103,7 +107,7 @@ function Contact() {
       return (
         <>
           <FaTimes className="btn-icon" />
-          Failed - Try Again
+          {t.failedTryAgain}
         </>
       );
     }
@@ -111,7 +115,7 @@ function Contact() {
     return (
       <>
         <FaPaperPlane className="btn-icon" />
-        Send Message
+        {t.sendMessage}
       </>
     );
   };
@@ -129,17 +133,17 @@ function Contact() {
 
   return (
     <div className="detail">
-      <h1 className="animate-slide-up">Contact</h1>
-      <p className="tagline animate-slide-up">Get in touch with me. I'll get back to you as soon as possible!</p>
+      <h1 className="animate-slide-up">{t.contactTitle}</h1>
+      <p className="tagline animate-slide-up">{t.contactTagline}</p>
       
       <div className="contact-container">
         <div className="contact-info animate-card" style={{animationDelay: '0.2s'}}>
-          <h3>Let's Connect</h3>
+          <h3>{t.letsConnect}</h3>
           <div className="contact-item">
             <FaMapMarkerAlt className="contact-icon" />
             <div>
-              <strong>Location</strong>
-              <p>Morocco</p>
+              <strong>{t.location}</strong>
+              <p>Maroc</p>
             </div>
           </div>
           <div className="contact-item">
@@ -154,8 +158,8 @@ function Contact() {
           <div className="contact-item">
             <FaClock className="contact-icon" />
             <div>
-              <strong>Response Time</strong>
-              <p>Within 24 hours</p>
+              <strong>{t.responseTime}</strong>
+              <p>{t.within24Hours}</p>
             </div>
           </div>
         </div>
@@ -168,7 +172,7 @@ function Contact() {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Your Name"
+                  placeholder={t.yourName}
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -183,7 +187,7 @@ function Contact() {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Your Email"
+                  placeholder={t.yourEmail}
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -195,7 +199,7 @@ function Contact() {
             <div className="form-group">
               <textarea
                 name="message"
-                placeholder="Your Message..."
+                placeholder={t.yourMessage}
                 rows="5"
                 value={formData.message}
                 onChange={handleChange}
@@ -212,8 +216,6 @@ function Contact() {
               {getButtonContent()}
             </button>
           </form>
-          
-          {/* Removed the success and error message blocks */}
         </div>
       </div>
     </div>

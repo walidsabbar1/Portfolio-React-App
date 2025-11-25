@@ -1,5 +1,5 @@
-// Skills.js
-import React, { useState, useEffect } from 'react';
+// Skills.js - Updated with Lottie animation on left side
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, 
   FaGitAlt, FaGithub, FaTasks, FaFileExcel
@@ -7,6 +7,12 @@ import {
 import { 
   SiPhp, SiLaravel, SiMysql, SiMongodb 
 } from 'react-icons/si';
+import Lottie from 'lottie-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../utils/translations';
+
+// Import your Lottie animation (adjust the path as needed)
+import skillsAnimation from '../Assets/animations/skills-animation.json';
 
 // Icon mapping
 const iconComponents = {
@@ -29,6 +35,9 @@ function Skills({ supabase, user }) {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const { language } = useLanguage();
+  const t = translations[language];
+  const lottieRef = useRef();
 
   useEffect(() => {
     fetchSkills();
@@ -62,20 +71,27 @@ function Skills({ supabase, user }) {
   };
 
   const getLevelLabel = (level) => {
-    if (level >= 8) return "Advanced";
-    if (level >= 6) return "Intermediate";
-    return "Basic";
+    if (level >= 8) return t.level.advanced;
+    if (level >= 6) return t.level.intermediate;
+    return t.level.basic;
   };
 
   const getIconComponent = (iconName) => {
     return iconComponents[iconName] || FaJs; // Default icon
   };
 
+  // Lottie animation options
+  const lottieOptions = {
+    animationData: skillsAnimation,
+    loop: true,
+    autoplay: true,
+  };
+
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
-        <h1>Skills</h1>
-        <p className="tagline">Technologies I work with</p>
+        <h1>{t.skillsTitle}</h1>
+        <p className="tagline">{t.skillsTagline}</p>
         
         <div className="skills-minimal">
           {[1, 2, 3, 4, 5].map(category => (
@@ -95,7 +111,7 @@ function Skills({ supabase, user }) {
                       <div className="skeleton skeleton-progress"></div>
                       <div className="skeleton skeleton-text-sm" style={{width: '20%'}}></div>
                     </div>
-                  </div>
+                </div>
                 ))}
               </div>
             </div>
@@ -107,65 +123,80 @@ function Skills({ supabase, user }) {
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>
-      <h1>Skills</h1>
-      <p className="tagline">Technologies I work with</p>
+      <h1>{t.skillsTitle}</h1>
+      <p className="tagline">{t.skillsTagline}</p>
       
-      <div className="skills-minimal">
-        {categories.map((category, categoryIndex) => {
-          const categorySkills = skills.filter(skill => skill.category === category);
-          
-          return (
-            <div key={category} className="skill-category">
-              <h3 className="category-title">{category}</h3>
-              <div className="skills-grid">
-                {categorySkills.map((skill, skillIndex) => {
-                  const IconComponent = getIconComponent(skill.icon_name);
-                  
-                  return (
-                    <div 
-                      key={skill.id}
-                      className="skill-card"
-                      style={{ 
-                        animationDelay: `${(categoryIndex * 0.2) + (skillIndex * 0.1)}s` 
-                      }}
-                    >
-                      <div className="skill-header">
-                        <div 
-                          className="skill-icon"
-                          style={{ color: skill.color }}
-                        >
-                          <IconComponent />
-                        </div>
-                        <div className="skill-info">
-                          <span className="skill-name">{skill.name}</span>
-                          <span 
-                            className="skill-level"
-                            style={{ color: getLevelColor(skill.level) }}
-                          >
-                            {getLevelLabel(skill.level)}
-                          </span>
-                        </div>
-                      </div>
+      <div className="skills-layout-container">
+        {/* Lottie Animation - Left Side (40%) */}
+        <div className="skills-animation-left">
+          <Lottie
+            lottieRef={lottieRef}
+            {...lottieOptions}
+            className="skills-lottie-animation"
+          />
+        </div>
+
+        {/* Skills Content - Right Side (60%) */}
+        <div className="skills-content-right">
+          <div className="skills-minimal">
+            {categories.map((category, categoryIndex) => {
+              const categorySkills = skills.filter(skill => skill.category === category);
+              
+              return (
+                <div key={category} className="skill-category">
+                  <h3 className="category-title">{category}</h3>
+                  <div className="skills-grid">
+                    {categorySkills.map((skill, skillIndex) => {
+                      const IconComponent = getIconComponent(skill.icon_name);
+                      const percentage = skill.level * 10; // Convert level (1-10) to percentage
                       
-                      <div className="skill-progress">
-                        <div className="progress-bar">
-                          <div 
-                            className="progress-fill"
-                            style={{ 
-                              width: `${(skill.level / 10) * 100}%`,
-                              backgroundColor: getLevelColor(skill.level)
-                            }}
-                          ></div>
+                      return (
+                        <div 
+                          key={skill.id}
+                          className="skill-card"
+                          style={{ 
+                            animationDelay: `${(categoryIndex * 0.2) + (skillIndex * 0.1)}s` 
+                          }}
+                        >
+                          <div className="skill-header">
+                            <div 
+                              className="skill-icon"
+                              style={{ color: skill.color }}
+                            >
+                              <IconComponent />
+                            </div>
+                            <div className="skill-info">
+                              <span className="skill-name">{skill.name}</span>
+                              <span 
+                                className="skill-level"
+                                style={{ color: getLevelColor(skill.level) }}
+                              >
+                                {getLevelLabel(skill.level)}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="skill-progress">
+                            <div className="progress-bar">
+                              <div 
+                                className="progress-fill"
+                                style={{ 
+                                  width: `${percentage}%`,
+                                  backgroundColor: getLevelColor(skill.level)
+                                }}
+                              ></div>
+                            </div>
+                            <span className="progress-text">Lvl {skill.level}</span>
+                          </div>
                         </div>
-                        <span className="progress-text">Lvl {skill.level}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

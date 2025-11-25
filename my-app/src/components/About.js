@@ -1,9 +1,13 @@
 // About.js
 import { useEffect, useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../utils/translations';
 
 function About({ supabase, user }) {
   const [visitCount, setVisitCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   useEffect(() => {
     const trackVisit = async () => {
@@ -46,11 +50,11 @@ function About({ supabase, user }) {
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
-        <h1>About Me</h1>
-        <p className="tagline">Learn more about my journey and passion for web development.</p>
+        <h1>{t.aboutTitle}</h1>
+        <p className="tagline">{t.aboutTagline}</p>
         
         <div className="skeleton-grid skeleton-grid-cards">
-          {[1, 2, 3, 4].map(i => (
+          {[1, 2, 3].map(i => (
             <div key={i} className="skeleton skeleton-card-medium">
               <div style={{ padding: '2rem' }}>
                 <div className="skeleton skeleton-icon"></div>
@@ -68,20 +72,17 @@ function About({ supabase, user }) {
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>
-      <h1 className="animate-slide-up">About Me</h1>
-      <p className="tagline animate-slide-up">Learn more about my journey and passion for web development.</p>
+      <h1 className="animate-slide-up">{t.aboutTitle}</h1>
+      <p className="tagline animate-slide-up">{t.aboutTagline}</p>
       
       <div className="about-cards">
         <div className="about-card animate-card" style={{animationDelay: '0.1s'}}>
           <div className="about-card-icon">
             <i className='bx bx-user'></i>
           </div>
-          <h2 className="about-card-title">Who I Am</h2>
+          <h2 className="about-card-title">{t.whoIAm}</h2>
           <p className="about-card-text">
-            I'm a passionate web developer with experience in modern technologies 
-            including React, Node.js, and various database systems. I love creating 
-            efficient, scalable, and user-friendly applications. My journey in web development 
-            has been driven by curiosity and a desire to build solutions that make a difference.
+            {t.whoIAmText}
           </p>
         </div>
 
@@ -89,44 +90,54 @@ function About({ supabase, user }) {
           <div className="about-card-icon">
             <i className='bx bx-book'></i>
           </div>
-          <h2 className="about-card-title">Education</h2>
+          <h2 className="about-card-title">{t.education}</h2>
           <div className="about-card-content">
-            <h3 className="about-card-subtitle">Licence Professionnelle</h3>
-            <p className="about-card-text">
-              Currently pursuing my professional degree, focusing on web development 
-              and software engineering. Gaining hands-on experience with industry-standard 
-              technologies and best practices.
-            </p>
+            <div className="education-item">
+              <h3 className="about-card-subtitle">{t.educationItems.license.title}</h3>
+              <p className="education-period">{t.educationItems.license.period}</p>
+              <p className="about-card-text">
+                {t.educationItems.license.description}
+              </p>
+            </div>
+            
+            <div className="education-item">
+              <h3 className="about-card-subtitle">{t.educationItems.fullstack.title}</h3>
+              <p className="education-period">{t.educationItems.fullstack.period}</p>
+              <p className="about-card-text">
+                {t.educationItems.fullstack.description}
+              </p>
+            </div>
+            
+            <div className="education-item">
+              <h3 className="about-card-subtitle">{t.educationItems.bac.title}</h3>
+              <p className="education-period">{t.educationItems.bac.period}</p>
+              <p className="about-card-text">
+                {t.educationItems.bac.description}
+              </p>
+            </div>
           </div>
         </div>
 
         <div className="about-card animate-card" style={{animationDelay: '0.3s'}}>
           <div className="about-card-icon">
-            <i className='bx bx-heart'></i>
+            <i className='bx bx-briefcase'></i>
           </div>
-          <h2 className="about-card-title">Personal Information</h2>
+          <h2 className="about-card-title">{t.experience}</h2>
           <div className="about-card-content">
-            <p className="about-card-text">
-              Beyond coding, I'm passionate about continuous learning and staying up-to-date 
-              with the latest trends in web development. I enjoy sharing knowledge through 
-              content creation and contributing to the developer community.
-            </p>
-            <p className="about-card-text">
-              When I'm not coding, you can find me exploring new technologies, working on 
-              personal projects, or sharing insights on my social media channels.
-            </p>
-          </div>
-        </div>
-        
-        <div className="about-card about-card-stats animate-card" style={{animationDelay: '0.4s'}}>
-          <div className="about-card-icon">
-            <i className='bx bx-bar-chart-alt-2'></i>
-          </div>
-          <h2 className="about-card-title">Statistics</h2>
-          <div className="about-card-content">
-            <div className="stat-item">
-              <span className="stat-number">{visitCount}</span>
-              <span className="stat-label">About Page Views</span>
+            <div className="experience-item">
+              <h3 className="about-card-subtitle">{t.experienceItems.sothema.title}</h3>
+              <p className="experience-period">{t.experienceItems.sothema.period}</p>
+              <p className="about-card-text">
+                {t.experienceItems.sothema.description}
+              </p>
+            </div>
+            
+            <div className="experience-item">
+              <h3 className="about-card-subtitle">{t.experienceItems.hackathon.title}</h3>
+              <p className="experience-period">{t.experienceItems.hackathon.period}</p>
+              <p className="about-card-text">
+                {t.experienceItems.hackathon.description}
+              </p>
             </div>
           </div>
         </div>

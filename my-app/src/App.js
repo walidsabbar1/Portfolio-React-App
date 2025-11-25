@@ -1,6 +1,9 @@
+// App.js
 import { useState, useCallback, lazy, Suspense, useMemo, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { supabase } from './lib/supabase';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
+import { translations } from './utils/translations';
 import './App.css';
 import pfp from './Assets/images/pfpwebp.webp';
 
@@ -14,11 +17,11 @@ const Footer = lazy(() => import('./components/Footer'));
 
 // Navigation configuration
 const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About' },
-  { path: '/skills', label: 'Skills' },
-  { path: '/projects', label: 'Projects' },
-  { path: '/contact', label: 'Contact' },
+  { path: '/', label: 'home' },
+  { path: '/about', label: 'about' },
+  { path: '/skills', label: 'skills' },
+  { path: '/projects', label: 'projects' },
+  { path: '/contact', label: 'contact' },
 ];
 
 // Routes configuration
@@ -57,7 +60,7 @@ const PageWrapper = ({ children, showProfile = false }) => (
 
 // LinkedIn-style Skeleton Loading Components
 const SkeletonHome = () => (
-  <PageWrapper showProfile={false}> {/* Don't show actual profile in skeleton */}
+  <PageWrapper showProfile={false}>
     <div className="detail home-animate">
       <div className="skeleton skeleton-text" style={{width: '100px'}}></div>
       <div className="skeleton skeleton-title"></div>
@@ -68,12 +71,12 @@ const SkeletonHome = () => (
         ))}
       </div>
     </div>
-    {/* Only show skeleton profile, not actual image */}
     <div className="skeleton-profile-container fixed-image">
       <div className="skeleton-profile-image"></div>
     </div>
   </PageWrapper>
 );
+
 const SkeletonAbout = () => (
   <PageWrapper>
     <div className="detail">
@@ -200,6 +203,9 @@ const LoadingFallback = ({ route }) => {
 
 // Header component
 const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
+  const { language, toggleLanguage, isFrench } = useLanguage();
+  const t = translations[language];
+
   const handleMenuToggle = useCallback((e) => {
     setMenuOpen(e.target.checked);
   }, [setMenuOpen]);
@@ -231,15 +237,27 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
               {navLinks.map(({ path, label }) => (
                 <li key={path}>
                   <NavigationLink to={path} onNavigate={handleNavClick}>
-                    {label}
+                    {t[label]}
                   </NavigationLink>
                 </li>
               ))}
+              
+              {/* Language Toggle */}
+              <li className="language-toggle">
+                <button 
+                  onClick={toggleLanguage}
+                  className="language-btn"
+                  aria-label={isFrench ? "Switch to English" : "Passer en Français"}
+                >
+                  {isFrench ? 'EN' : 'FR'}
+                </button>
+              </li>
+              
               {user && (
                 <li className="user-info">
-                  <span>Welcome, {user.email}</span>
+                  <span>{t.welcomeUser} {user.email}</span>
                   <button onClick={onLogout} className="logout-btn">
-                    Logout
+                    {t.logout}
                   </button>
                 </li>
               )}
@@ -251,7 +269,8 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
   );
 };
 
-function App() {
+// Main App component
+function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -296,27 +315,26 @@ function App() {
     }
   }, []);
 
-  // In App.js, update the routeElements to remove user prop from Contact
-const routeElements = useMemo(
-  () => routes.map(({ path, Component, showProfile }) => (
-    <Route 
-      key={path} 
-      path={path} 
-      element={
-        <Suspense fallback={<LoadingFallback route={path} />}>
-          <PageWrapper showProfile={showProfile}>
-            {Component === Contact ? (
-              <Component />
-            ) : (
-              <Component supabase={supabase} user={user} />
-            )}
-          </PageWrapper>
-        </Suspense>
-      } 
-    />
-  )),
-  [user, supabase]
-);
+  const routeElements = useMemo(
+    () => routes.map(({ path, Component, showProfile }) => (
+      <Route 
+        key={path} 
+        path={path} 
+        element={
+          <Suspense fallback={<LoadingFallback route={path} />}>
+            <PageWrapper showProfile={showProfile}>
+              {Component === Contact ? (
+                <Component />
+              ) : (
+                <Component supabase={supabase} user={user} />
+              )}
+            </PageWrapper>
+          </Suspense>
+        } 
+      />
+    )),
+    [user, supabase]
+  );
 
   if (loading) {
     return (
@@ -350,6 +368,15 @@ const routeElements = useMemo(
         <Footer />
       </Suspense>
     </BrowserRouter>
+  );
+}
+
+// App wrapper with LanguageProvider
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 

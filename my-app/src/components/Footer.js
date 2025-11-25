@@ -1,8 +1,13 @@
+// Footer.js
 import { NavLink } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../utils/translations';
 import cv from '../Assets/Walid_Sabbar_cv.pdf';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const { language } = useLanguage();
+  const t = translations[language];
 
   return (
     <footer className="footer">
@@ -10,22 +15,22 @@ function Footer() {
         <div className="footer-content">
           <div className="footer-section">
             <h3 className="footer-logo">Walid Sabbar</h3>
-            <p className="footer-tagline">Web Developer & Creative Problem Solver</p>
+            <p className="footer-tagline">{t.tagline}</p>
           </div>
           
           <div className="footer-section">
-            <h4 className="footer-heading">Quick Links</h4>
+            <h4 className="footer-heading">{t.quickLinks}</h4>
             <nav className="footer-nav">
-              <NavLink to="/">Home</NavLink>
-              <NavLink to="/about">About</NavLink>
-              <NavLink to="/skills">Skills</NavLink>
-              <NavLink to="/projects">Projects</NavLink>
-              <NavLink to="/contact">Contact</NavLink>
+              <NavLink to="/">{t.home}</NavLink>
+              <NavLink to="/about">{t.about}</NavLink>
+              <NavLink to="/skills">{t.skills}</NavLink>
+              <NavLink to="/projects">{t.projects}</NavLink>
+              <NavLink to="/contact">{t.contact}</NavLink>
             </nav>
           </div>
           
           <div className="footer-section">
-            <h4 className="footer-heading">Connect</h4>
+            <h4 className="footer-heading">{t.connect}</h4>
             <div className="footer-social">
               <a href="https://www.linkedin.com/in/walid-sabbar-5262152a0/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
                 <i className='bx bxl-linkedin' aria-hidden="true"></i>
@@ -39,7 +44,7 @@ function Footer() {
               <a href="https://www.instagram.com/walid_sabbar1" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
                 <i className='bx bxl-instagram' aria-hidden="true"></i>
               </a>
-              <a href={cv} download="Walid_Sabbar_CV.pdf" className="footer-cv" aria-label="Download CV">
+              <a href={cv} download="Walid_Sabbar_CV.pdf" className="footer-cv" aria-label={t.downloadCv}>
                 <i className='bx bx-download' aria-hidden="true"></i>
               </a>
             </div>
@@ -48,7 +53,7 @@ function Footer() {
         
         <div className="footer-bottom">
           <p className="footer-copyright">
-            © {currentYear} Walid Sabbar. All rights reserved.
+            © {currentYear} Walid Sabbar. {t.rightsReserved}
           </p>
         </div>
       </div>
@@ -57,4 +62,3 @@ function Footer() {
 }
 
 export default Footer;
-
