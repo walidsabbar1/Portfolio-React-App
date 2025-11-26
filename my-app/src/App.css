@@ -24,7 +24,7 @@
 }
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;    
-    background: linear-gradient(135deg, var(--white) 68%, var(--black) 32%) fixed;
+    background: linear-gradient(135deg, var(--white) 70%, var(--black) 30%) fixed;
     min-height: 100vh;
     color: var(--white);
     overflow-x: hidden;
@@ -382,7 +382,7 @@ nav li a.active {
     box-shadow: var(--shadow-hover);
 }
 .images {
-    transform: translateY(50px);
+    transform: translateY(100px);
     width: 400px;
     height: 400px;
     grid-column: 3;
@@ -1373,5 +1373,519 @@ nav ul {
   .language-btn {
     width: 100%;
     text-align: center;
+  }
+}
+/* Contact Animation Styles */
+.contact-info {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-animation-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Make sure the contact info items don't overlap with animation */
+.contact-info .contact-item:last-child {
+  margin-bottom: 180px; /* Add space for the animation */
+}
+
+/* Responsive adjustments for contact animation */
+@media (max-width: 1024px) {
+  .contact-animation-container {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .contact-info .contact-item:last-child {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-animation-container {
+    margin-top: 1.5rem;
+  }
+  
+  .contact-animation-container lottie-react {
+    width: 120px !important;
+    height: 120px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-animation-container lottie-react {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}   
+/* Projects Terminal Layout */
+.projects-terminal-container {
+  margin-top: 2rem;
+}
+
+.projects-terminal {
+  display: grid;
+  grid-template-columns: 350px 50px 1fr;
+  gap: 0;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-hover);
+  border: 2px solid var(--black);
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+}
+
+/* Panel Headers */
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: var(--black);
+  border-bottom: 2px solid var(--black);
+}
+
+.panel-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.panel-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.dot1 { background: #ff5f56; } /* Red */
+.dot2 { background: #ffbd2e; } /* Yellow */
+.dot3 { background: #27c93f; } /* Green */
+
+.panel-title {
+  color: var(--white);
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Left Panel - Project List */
+.projects-list-panel {
+  background: var(--white);
+  border-right: 2px solid var(--black);
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0;
+}
+
+.project-list-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.project-list-item:hover {
+  background: rgba(26, 29, 33, 0.05);
+}
+
+.project-list-item.selected {
+  background: rgba(26, 29, 33, 0.08);
+  border-left-color: var(--black);
+}
+
+.project-list-indicator {
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+}
+
+.indicator-arrow {
+  color: var(--black);
+  font-size: 0.8rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.project-list-content {
+  flex: 1;
+}
+
+.project-list-title {
+  color: var(--black);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.project-list-tech {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.tech-badge {
+  background: var(--black);
+  color: var(--white);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* Connection Cables */
+.terminal-cables {
+  position: relative;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.cable {
+  width: 8px;
+  height: 80px;
+  background: var(--black);
+  border-radius: 4px;
+  position: relative;
+  opacity: 0.7;
+}
+
+.cable::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--black), rgba(26, 29, 33, 0.3), var(--black));
+  border-radius: 6px;
+  z-index: -1;
+}
+
+.cable-1 { animation: cableGlow 3s ease-in-out infinite; }
+.cable-2 { animation: cableGlow 3s ease-in-out infinite 0.5s; }
+.cable-3 { animation: cableGlow 3s ease-in-out infinite 1s; }
+
+@keyframes cableGlow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Right Panel - Project Details */
+.project-details-panel {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+}
+
+.project-details-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.project-description {
+  color: var(--gray-medium);
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.project-tech-stack h4 {
+  color: var(--black);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-family: 'Courier New', monospace;
+}
+
+.tech-tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tech-tag-large {
+  background: var(--black);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tech-tag-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 29, 33, 0.3);
+}
+
+.project-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.project-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid var(--black);
+}
+
+.live-demo {
+  background: var(--black);
+  color: var(--white);
+}
+
+.live-demo:hover {
+  background: rgba(26, 29, 33, 0.9);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.source-code {
+  background: var(--white);
+  color: var(--black);
+}
+
+.source-code:hover {
+  background: rgba(26, 29, 33, 0.05);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.navigation-hint {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(26, 29, 33, 0.1);
+  color: var(--gray-medium);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.no-projects-message,
+.no-projects-details {
+  padding: 2rem;
+  text-align: center;
+  color: var(--gray-medium);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .projects-terminal {
+    grid-template-columns: 300px 30px 1fr;
+  }
+  
+  .project-details-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-terminal {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 20px auto;
+  }
+  
+  .projects-list-panel {
+    border-right: none;
+    border-bottom: 2px solid var(--black);
+  }
+  
+  .terminal-cables {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .cable {
+    width: 60px;
+    height: 8px;
+  }
+  
+  .project-actions {
+    flex-direction: column;
+  }
+  
+  .project-action-btn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .projects-terminal {
+    grid-template-rows: auto 15px auto;
+  }
+  
+  .panel-header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .project-list-item {
+    padding: 0.75rem 1rem;
+  }
+  
+  .project-details-content {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .tech-tags-grid {
+    gap: 0.5rem;
+  }
+  
+  .tech-tag-large {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Scrollbar Styling */
+.projects-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.projects-list::-webkit-scrollbar-track {
+  background: rgba(26, 29, 33, 0.1);
+}
+
+.projects-list::-webkit-scrollbar-thumb {
+  background: var(--black);
+  border-radius: 3px;
+}
+
+.projects-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 29, 33, 0.8);
+}
+/* Enhanced Skeleton Loading for Projects Terminal */
+.projects-terminal .skeleton {
+  background: linear-gradient(
+    90deg,
+    #334155 0%,
+    #475569 40%,
+    #64748b 50%,
+    #475569 60%,
+    #334155 100%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Project list item skeleton states */
+.project-list-item.skeleton-pulse {
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-left: 3px solid transparent;
+}
+
+.project-list-item.skeleton-pulse:hover {
+  background: transparent !important;
+}
+
+/* Cable skeleton animation */
+.terminal-cables .cable.skeleton-pulse {
+  animation: cableSkeletonPulse 2s ease-in-out infinite;
+  background: #475569;
+}
+
+@keyframes cableSkeletonPulse {
+  0%, 100% { 
+    opacity: 0.6;
+    background: #475569;
+  }
+  50% { 
+    opacity: 1;
+    background: #64748b;
+  }
+}
+
+/* Tech tags grid skeleton alignment */
+.tech-tags-grid .skeleton {
+  display: inline-block;
+  margin-right: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Panel header skeleton compatibility */
+.panel-header .skeleton {
+  background: linear-gradient(
+    90deg,
+    #475569 0%,
+    #64748b 40%,
+    #94a3b8 50%,
+    #64748b 60%,
+    #475569 100%
+  );
+  vertical-align: middle;
+}
+
+/* Ensure skeleton text aligns properly in panel titles */
+.panel-title .skeleton {
+  display: inline-block;
+  height: 1rem;
+  margin: 0;
+}
+
+/* Responsive adjustments for skeleton */
+@media (max-width: 768px) {
+  .projects-terminal .skeleton-text {
+    height: 0.875rem;
+  }
+  
+  .projects-terminal .skeleton-text-sm {
+    height: 0.75rem;
+  }
+  
+  .tech-tags-grid .skeleton {
+    height: 32px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .projects-terminal .skeleton-title {
+    height: 1.5rem;
+  }
+  
+  .projects-terminal .skeleton-tagline {
+    height: 1rem;
+  }
+  
+  .project-actions .skeleton {
+    width: 100% !important;
+    margin-bottom: 0.5rem;
   }
 }

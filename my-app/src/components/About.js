@@ -50,21 +50,53 @@ function About({ supabase, user }) {
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
-        <h1>{t.aboutTitle}</h1>
-        <p className="tagline">{t.aboutTagline}</p>
+        <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
+        <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
-        <div className="skeleton-grid skeleton-grid-cards">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="skeleton skeleton-card-medium">
-              <div style={{ padding: '2rem' }}>
-                <div className="skeleton skeleton-icon"></div>
-                <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
-                <div className="skeleton skeleton-text"></div>
-                <div className="skeleton skeleton-text"></div>
-                <div className="skeleton skeleton-text" style={{width: '80%'}}></div>
-              </div>
+        <div className="about-cards">
+          {/* Who I Am Card Skeleton */}
+          <div className="about-card">
+            <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
+            <div className="skeleton skeleton-text" style={{width: '60%', height: '1.75rem', marginBottom: '1rem'}}></div>
+            <div className="skeleton skeleton-text" style={{marginBottom: '0.75rem'}}></div>
+            <div className="skeleton skeleton-text" style={{width: '95%', marginBottom: '0.75rem'}}></div>
+            <div className="skeleton skeleton-text" style={{width: '90%', marginBottom: '0.75rem'}}></div>
+            <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
+          </div>
+
+          {/* Education Card Skeleton */}
+          <div className="about-card">
+            <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
+            <div className="skeleton skeleton-text" style={{width: '50%', height: '1.75rem', marginBottom: '1.5rem'}}></div>
+            
+            <div className="about-card-content">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="education-item" style={{marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(26, 29, 33, 0.1)'}}>
+                  <div className="skeleton skeleton-text" style={{width: '70%', height: '1.25rem', marginBottom: '0.5rem'}}></div>
+                  <div className="skeleton skeleton-text-sm" style={{width: '40%', height: '1rem', marginBottom: '0.75rem'}}></div>
+                  <div className="skeleton skeleton-text" style={{marginBottom: '0.5rem', width: '95%'}}></div>
+                  <div className="skeleton skeleton-text" style={{width: '90%'}}></div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Experience Card Skeleton */}
+          <div className="about-card">
+            <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
+            <div className="skeleton skeleton-text" style={{width: '60%', height: '1.75rem', marginBottom: '1.5rem'}}></div>
+            
+            <div className="about-card-content">
+              {[1, 2].map(i => (
+                <div key={i} className="experience-item" style={{marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(26, 29, 33, 0.1)'}}>
+                  <div className="skeleton skeleton-text" style={{width: '80%', height: '1.25rem', marginBottom: '0.5rem'}}></div>
+                  <div className="skeleton skeleton-text-sm" style={{width: '35%', height: '1rem', marginBottom: '0.75rem'}}></div>
+                  <div className="skeleton skeleton-text" style={{marginBottom: '0.5rem', width: '95%'}}></div>
+                  <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     );

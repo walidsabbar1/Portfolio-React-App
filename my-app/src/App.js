@@ -62,12 +62,31 @@ const PageWrapper = ({ children, showProfile = false }) => (
 const SkeletonHome = () => (
   <PageWrapper showProfile={false}>
     <div className="detail home-animate">
-      <div className="skeleton skeleton-text" style={{width: '100px'}}></div>
-      <div className="skeleton skeleton-title"></div>
-      <div className="skeleton skeleton-tagline"></div>
-      <div className="skeleton-social">
+      <div className="skeleton skeleton-text" style={{
+        width: '150px', 
+        height: '1.4rem', 
+        marginBottom: '0.25rem'
+      }}></div>
+      
+      <div className="skeleton skeleton-title" style={{
+        height: '3.5rem',
+        marginBottom: '0.75rem',
+        width: '300px'
+      }}></div>
+      
+      <div className="skeleton skeleton-tagline" style={{
+        width: '400px',
+        height: '1.2rem',
+        marginBottom: '1.25rem'
+      }}></div>
+      
+      <div className="social">
         {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className="skeleton skeleton-button"></div>
+          <div key={i} className="skeleton skeleton-button" style={{
+            width: '3.2rem',
+            height: '3.2rem',
+            borderRadius: '8px'
+          }}></div>
         ))}
       </div>
     </div>
@@ -80,20 +99,53 @@ const SkeletonHome = () => (
 const SkeletonAbout = () => (
   <PageWrapper>
     <div className="detail">
-      <div className="skeleton skeleton-title"></div>
-      <div className="skeleton skeleton-tagline"></div>
-      <div className="skeleton-grid skeleton-grid-cards">
-        {[1, 2, 3, 4].map(i => (
-          <div key={i} className="skeleton skeleton-card-medium">
-            <div style={{ padding: '2rem' }}>
-              <div className="skeleton skeleton-icon"></div>
-              <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
-              <div className="skeleton skeleton-text"></div>
-              <div className="skeleton skeleton-text"></div>
-              <div className="skeleton skeleton-text" style={{width: '80%'}}></div>
-            </div>
+      <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
+      <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
+      
+      <div className="about-cards">
+        {/* Who I Am Card Skeleton */}
+        <div className="about-card">
+          <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
+          <div className="skeleton skeleton-text" style={{width: '60%', height: '1.75rem', marginBottom: '1rem'}}></div>
+          <div className="skeleton skeleton-text" style={{marginBottom: '0.75rem'}}></div>
+          <div className="skeleton skeleton-text" style={{width: '95%', marginBottom: '0.75rem'}}></div>
+          <div className="skeleton skeleton-text" style={{width: '90%', marginBottom: '0.75rem'}}></div>
+          <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
+        </div>
+
+        {/* Education Card Skeleton */}
+        <div className="about-card">
+          <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
+          <div className="skeleton skeleton-text" style={{width: '50%', height: '1.75rem', marginBottom: '1.5rem'}}></div>
+          
+          <div className="about-card-content">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="education-item" style={{marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(26, 29, 33, 0.1)'}}>
+                <div className="skeleton skeleton-text" style={{width: '70%', height: '1.25rem', marginBottom: '0.5rem'}}></div>
+                <div className="skeleton skeleton-text-sm" style={{width: '40%', height: '1rem', marginBottom: '0.75rem'}}></div>
+                <div className="skeleton skeleton-text" style={{marginBottom: '0.5rem', width: '95%'}}></div>
+                <div className="skeleton skeleton-text" style={{width: '90%'}}></div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Experience Card Skeleton */}
+        <div className="about-card">
+          <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
+          <div className="skeleton skeleton-text" style={{width: '60%', height: '1.75rem', marginBottom: '1.5rem'}}></div>
+          
+          <div className="about-card-content">
+            {[1, 2].map(i => (
+              <div key={i} className="experience-item" style={{marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(26, 29, 33, 0.1)'}}>
+                <div className="skeleton skeleton-text" style={{width: '80%', height: '1.25rem', marginBottom: '0.5rem'}}></div>
+                <div className="skeleton skeleton-text-sm" style={{width: '35%', height: '1rem', marginBottom: '0.75rem'}}></div>
+                <div className="skeleton skeleton-text" style={{marginBottom: '0.5rem', width: '95%'}}></div>
+                <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </PageWrapper>
@@ -101,32 +153,82 @@ const SkeletonAbout = () => (
 
 const SkeletonSkills = () => (
   <PageWrapper>
-    <div className="detail">
-      <div className="skeleton skeleton-title"></div>
-      <div className="skeleton skeleton-tagline"></div>
-      <div className="skills-minimal">
-        {[1, 2, 3, 4, 5].map(category => (
-          <div key={category} className="skill-category">
-            <div className="skeleton skeleton-text" style={{width: '40%', height: '1.5rem'}}></div>
-            <div className="skeleton-grid skeleton-grid-skills">
-              {[1, 2, 3].map(skill => (
-                <div key={skill} className="skeleton skeleton-card-small">
-                  <div style={{ padding: '1.5rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                      <div className="skeleton skeleton-circle-small"></div>
-                      <div style={{ flex: 1 }}>
-                        <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
-                        <div className="skeleton skeleton-text-sm" style={{width: '40%'}}></div>
+    <div className="detail" style={{ marginTop: 0 }}>
+      <div className="skeleton skeleton-title" style={{width: '150px', height: '2.5rem', marginBottom: '1rem'}}></div>
+      <div className="skeleton skeleton-tagline" style={{width: '250px', height: '1.5rem', marginBottom: '2rem'}}></div>
+      
+      <div className="skills-layout-container">
+        {/* Lottie Animation Skeleton - Left Side */}
+        <div className="skills-animation-left">
+          <div className="skeleton" style={{
+            width: '100%',
+            height: '100%',
+            borderRadius: '16px',
+            minHeight: '500px'
+          }}></div>
+        </div>
+
+        {/* Skills Content Skeleton - Right Side */}
+        <div className="skills-content-right">
+          <div className="skills-minimal">
+            {[1, 2, 3, 4].map((category, categoryIndex) => (
+              <div key={category} className="skill-category" style={{marginBottom: '3rem'}}>
+                <div className="skeleton skeleton-text" style={{
+                  width: '40%',
+                  height: '1.5rem',
+                  marginBottom: '1.5rem'
+                }}></div>
+                
+                <div className="skills-grid">
+                  {[1, 2, 3].map((skill, skillIndex) => {
+                    const animationDelay = `${(categoryIndex * 0.2) + (skillIndex * 0.1)}s`;
+                    
+                    return (
+                      <div 
+                        key={skill}
+                        className="skill-card skeleton-pulse"
+                        style={{ animationDelay }}
+                      >
+                        <div className="skill-header">
+                          <div className="skeleton skeleton-circle-small" style={{
+                            width: '60px',
+                            height: '60px',
+                            borderRadius: '12px'
+                          }}></div>
+                          <div className="skill-info" style={{flex: 1}}>
+                            <div className="skeleton skeleton-text" style={{
+                              width: '60%',
+                              height: '1.1rem',
+                              marginBottom: '0.25rem'
+                            }}></div>
+                            <div className="skeleton skeleton-text-sm" style={{
+                              width: '40%',
+                              height: '0.85rem'
+                            }}></div>
+                          </div>
+                        </div>
+                        
+                        <div className="skill-progress">
+                          <div className="progress-bar">
+                            <div className="skeleton skeleton-progress" style={{
+                              width: `${Math.random() * 60 + 40}%`,
+                              height: '6px',
+                              borderRadius: '3px'
+                            }}></div>
+                          </div>
+                          <div className="skeleton skeleton-text-sm" style={{
+                            width: '40px',
+                            height: '0.8rem'
+                          }}></div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="skeleton skeleton-progress"></div>
-                    <div className="skeleton skeleton-text-sm" style={{width: '20%'}}></div>
-                  </div>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   </PageWrapper>
@@ -134,25 +236,97 @@ const SkeletonSkills = () => (
 
 const SkeletonProjects = () => (
   <PageWrapper>
-    <div className="detail">
-      <div className="skeleton skeleton-title"></div>
-      <div className="skeleton skeleton-tagline"></div>
-      <div className="skeleton-grid skeleton-grid-cards">
-        {[1, 2, 3, 4].map(i => (
-          <div key={i} className="skeleton skeleton-card-medium">
-            <div style={{ padding: '1.5rem' }}>
-              <div className="skeleton skeleton-text" style={{width: '70%', marginBottom: '1rem'}}></div>
-              <div className="skeleton skeleton-text"></div>
-              <div className="skeleton skeleton-text" style={{width: '90%'}}></div>
-              <div style={{ display: 'flex', gap: '0.5rem', margin: '1rem 0' }}>
-                <div className="skeleton skeleton-text-sm" style={{width: '60px'}}></div>
-                <div className="skeleton skeleton-text-sm" style={{width: '50px'}}></div>
-                <div className="skeleton skeleton-text-sm" style={{width: '70px'}}></div>
+    <div className="detail" style={{ marginTop: 0 }}>
+      <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
+      <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
+      
+      <div className="projects-terminal-container">
+        <div className="projects-terminal">
+          {/* Left Panel - Project List Skeleton */}
+          <div className="projects-list-panel">
+            <div className="panel-header">
+              <div className="panel-dots">
+                <span className='dot1'></span>
+                <span className='dot2'></span>
+                <span className='dot3'></span>
               </div>
-              <div className="skeleton skeleton-text-sm" style={{width: '30%'}}></div>
+              <span className="panel-title">PROJECTS LIST</span>
+            </div>
+            <div className="projects-list">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="project-list-item skeleton-pulse">
+                  <div className="project-list-indicator">
+                    <div className="skeleton skeleton-circle-small" style={{width: '12px', height: '12px'}}></div>
+                  </div>
+                  <div className="project-list-content">
+                    <div className="skeleton skeleton-text" style={{width: '70%', height: '1.2rem', marginBottom: '0.5rem'}}></div>
+                    <div className="project-list-tech">
+                      <div className="skeleton skeleton-text-sm" style={{width: '50px', height: '20px', borderRadius: '12px'}}></div>
+                      <div className="skeleton skeleton-text-sm" style={{width: '40px', height: '20px', borderRadius: '12px'}}></div>
+                      <div className="skeleton skeleton-text-sm" style={{width: '30px', height: '20px', borderRadius: '12px'}}></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
+
+          {/* Connection Cables Skeleton */}
+          <div className="terminal-cables">
+            <div className="cable cable-1 skeleton-pulse"></div>
+            <div className="cable cable-2 skeleton-pulse"></div>
+            <div className="cable cable-3 skeleton-pulse"></div>
+          </div>
+
+          {/* Right Panel - Project Details Skeleton */}
+          <div className="project-details-panel">
+            <div className="panel-header">
+              <div className="panel-dots">
+                <span className='dot1'></span>
+                <span className='dot2'></span>
+                <span className='dot3'></span>
+              </div>
+              <span className="panel-title">
+                <div className="skeleton skeleton-text" style={{width: '150px', height: '1rem', display: 'inline-block'}}></div>
+              </span>
+            </div>
+            
+            <div className="project-details-content">
+              {/* Project Description Skeleton */}
+              <div className="project-description">
+                <div className="skeleton skeleton-text" style={{marginBottom: '0.75rem'}}></div>
+                <div className="skeleton skeleton-text" style={{width: '95%', marginBottom: '0.75rem'}}></div>
+                <div className="skeleton skeleton-text" style={{width: '90%', marginBottom: '0.75rem'}}></div>
+                <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
+              </div>
+              
+              {/* Tech Stack Skeleton */}
+              <div className="project-tech-stack">
+                <div className="skeleton skeleton-text" style={{width: '120px', height: '1.2rem', marginBottom: '1rem'}}></div>
+                <div className="tech-tags-grid">
+                  {[1, 2, 3, 4, 5, 6].map(i => (
+                    <div key={i} className="skeleton skeleton-text" style={{
+                      width: `${Math.random() * 40 + 60}px`,
+                      height: '36px',
+                      borderRadius: '20px'
+                    }}></div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Action Buttons Skeleton */}
+              <div className="project-actions">
+                <div className="skeleton skeleton-button" style={{width: '140px', height: '44px', borderRadius: '8px'}}></div>
+                <div className="skeleton skeleton-button" style={{width: '160px', height: '44px', borderRadius: '8px'}}></div>
+              </div>
+              
+              {/* Navigation Hint Skeleton */}
+              <div className="navigation-hint">
+                <div className="skeleton skeleton-text-sm" style={{width: '250px', height: '0.9rem', margin: '0 auto'}}></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </PageWrapper>
@@ -161,25 +335,56 @@ const SkeletonProjects = () => (
 const SkeletonContact = () => (
   <PageWrapper>
     <div className="detail">
-      <div className="skeleton skeleton-title"></div>
-      <div className="skeleton skeleton-tagline"></div>
+      <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
+      <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
+      
       <div className="contact-container">
-        <div className="skeleton skeleton-card-large">
-          <div style={{ padding: '2rem' }}>
-            <div className="skeleton skeleton-text" style={{width: '40%', marginBottom: '1.5rem'}}></div>
-            {[1, 2, 3].map(i => (
-              <div key={i} className="skeleton skeleton-contact-item"></div>
-            ))}
+        {/* Contact Info Skeleton */}
+        <div className="contact-info">
+          <div className="skeleton skeleton-text" style={{width: '40%', height: '1.75rem', marginBottom: '1.5rem'}}></div>
+          
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="contact-item">
+              <div className="skeleton skeleton-circle-small" style={{width: '1.2rem', height: '1.2rem', marginTop: '0.2rem', flexShrink: 0}}></div>
+              <div style={{flex: 1}}>
+                <div className="skeleton skeleton-text" style={{width: '30%', height: '1rem', marginBottom: '0.25rem'}}></div>
+                <div className="skeleton skeleton-text-sm" style={{width: '60%', height: '0.9rem'}}></div>
+              </div>
+            </div>
+          ))}
+          
+          {/* Animation placeholder skeleton */}
+          <div className="contact-animation-container">
+            <div className="skeleton" style={{width: '150px', height: '150px', borderRadius: '12px'}}></div>
           </div>
         </div>
-        <div className="skeleton skeleton-card-large">
-          <div style={{ padding: '2rem' }}>
-            <div className="skeleton skeleton-text" style={{width: '60%', marginBottom: '1rem'}}></div>
-            <div className="skeleton skeleton-form-input"></div>
-            <div className="skeleton skeleton-form-input"></div>
-            <div className="skeleton skeleton-form-textarea"></div>
+
+        {/* Contact Form Skeleton */}
+        <div className="contact-form-wrapper">
+          <form className="contact-form">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="form-group">
+                {i < 3 ? (
+                  <div className="input-with-icon">
+                    <div className="skeleton skeleton-circle-small" style={{
+                      position: 'absolute', 
+                      left: '1rem', 
+                      top: '50%', 
+                      transform: 'translateY(-50%)', 
+                      width: '1rem', 
+                      height: '1rem',
+                      zIndex: 1
+                    }}></div>
+                    <div className="skeleton skeleton-form-input" style={{paddingLeft: '3rem'}}></div>
+                  </div>
+                ) : (
+                  <div className="skeleton skeleton-form-textarea"></div>
+                )}
+              </div>
+            ))}
+            
             <div className="skeleton skeleton-form-input" style={{width: '50%', height: '3.5rem'}}></div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

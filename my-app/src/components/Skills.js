@@ -90,32 +90,81 @@ function Skills({ supabase, user }) {
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
-        <h1>{t.skillsTitle}</h1>
-        <p className="tagline">{t.skillsTagline}</p>
+        <div className="skeleton skeleton-title" style={{width: '150px', height: '2.5rem', marginBottom: '1rem'}}></div>
+        <div className="skeleton skeleton-tagline" style={{width: '250px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
-        <div className="skills-minimal">
-          {[1, 2, 3, 4, 5].map(category => (
-            <div key={category} className="skill-category">
-              <div className="skeleton skeleton-text" style={{width: '40%', height: '1.5rem', marginBottom: '1.5rem'}}></div>
-              <div className="skeleton-grid skeleton-grid-skills">
-                {[1, 2, 3].map(skill => (
-                  <div key={skill} className="skeleton skeleton-card-small">
-                    <div style={{ padding: '1.5rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                        <div className="skeleton skeleton-circle-small"></div>
-                        <div style={{ flex: 1 }}>
-                          <div className="skeleton skeleton-text" style={{width: '60%'}}></div>
-                          <div className="skeleton skeleton-text-sm" style={{width: '40%'}}></div>
+        <div className="skills-layout-container">
+          {/* Lottie Animation Skeleton - Left Side */}
+          <div className="skills-animation-left">
+            <div className="skeleton" style={{
+              width: '100%',
+              height: '100%',
+              borderRadius: '16px',
+              minHeight: '500px'
+            }}></div>
+          </div>
+
+          {/* Skills Content Skeleton - Right Side */}
+          <div className="skills-content-right">
+            <div className="skills-minimal">
+              {[1, 2, 3, 4].map((category, categoryIndex) => (
+                <div key={category} className="skill-category" style={{marginBottom: '3rem'}}>
+                  <div className="skeleton skeleton-text" style={{
+                    width: '40%',
+                    height: '1.5rem',
+                    marginBottom: '1.5rem'
+                  }}></div>
+                  
+                  <div className="skills-grid">
+                    {[1, 2, 3].map((skill, skillIndex) => {
+                      const animationDelay = `${(categoryIndex * 0.2) + (skillIndex * 0.1)}s`;
+                      
+                      return (
+                        <div 
+                          key={skill}
+                          className="skill-card skeleton-pulse"
+                          style={{ animationDelay }}
+                        >
+                          <div className="skill-header">
+                            <div className="skeleton skeleton-circle-small" style={{
+                              width: '60px',
+                              height: '60px',
+                              borderRadius: '12px'
+                            }}></div>
+                            <div className="skill-info" style={{flex: 1}}>
+                              <div className="skeleton skeleton-text" style={{
+                                width: '60%',
+                                height: '1.1rem',
+                                marginBottom: '0.25rem'
+                              }}></div>
+                              <div className="skeleton skeleton-text-sm" style={{
+                                width: '40%',
+                                height: '0.85rem'
+                              }}></div>
+                            </div>
+                          </div>
+                          
+                          <div className="skill-progress">
+                            <div className="progress-bar">
+                              <div className="skeleton skeleton-progress" style={{
+                                width: `${Math.random() * 60 + 40}%`,
+                                height: '6px',
+                                borderRadius: '3px'
+                              }}></div>
+                            </div>
+                            <div className="skeleton skeleton-text-sm" style={{
+                              width: '40px',
+                              height: '0.8rem'
+                            }}></div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="skeleton skeleton-progress"></div>
-                      <div className="skeleton skeleton-text-sm" style={{width: '20%'}}></div>
-                    </div>
+                      );
+                    })}
+                  </div>
                 </div>
-                ))}
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     );

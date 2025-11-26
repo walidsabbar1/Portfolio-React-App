@@ -14,6 +14,43 @@ function Home() {
     document.body.classList.add('page-loaded');
   }, []);
 
+  // Loading state
+  const loading = false; // This would typically come from props or state
+
+  if (loading) {
+    return (
+      <div className="detail home-animate">
+        <div className="skeleton skeleton-text" style={{
+          width: '150px', 
+          height: '1.4rem', 
+          marginBottom: '0.25rem'
+        }}></div>
+        
+        <div className="skeleton skeleton-title" style={{
+          height: '3.5rem',
+          marginBottom: '0.75rem',
+          width: '300px'
+        }}></div>
+        
+        <div className="skeleton skeleton-tagline" style={{
+          width: '400px',
+          height: '1.2rem',
+          marginBottom: '1.25rem'
+        }}></div>
+        
+        <div className="social">
+          {[1, 2, 3, 4, 5].map(i => (
+            <div key={i} className="skeleton skeleton-button" style={{
+              width: '3.2rem',
+              height: '3.2rem',
+              borderRadius: '8px'
+            }}></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="detail home-animate">
       <h3 className="animate-slide-up home-intro">{t.welcome}</h3>
