@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
+import InteractiveBackground from './InteractiveBackground';
 
 function About({ supabase, user }) {
   const [visitCount, setVisitCount] = useState(0);
@@ -50,6 +51,7 @@ function About({ supabase, user }) {
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
+        <InteractiveBackground />
         <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
         <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
@@ -104,6 +106,7 @@ function About({ supabase, user }) {
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>
+      <InteractiveBackground />
       <h1 className="animate-slide-up">{t.aboutTitle}</h1>
       <p className="tagline animate-slide-up">{t.aboutTagline}</p>
       

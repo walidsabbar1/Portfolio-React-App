@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
 import cv from '../Assets/Walid_Sabbar_cv.pdf';
+import InteractiveBackground from './InteractiveBackground';
 
 function Home() {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ function Home() {
 
   return (
     <div className="detail home-animate">
+      <InteractiveBackground />
       <h3 className="animate-slide-up home-intro">{t.welcome}</h3>
       
       <h1 className="animate-slide-left home-title">

@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
 import Lottie from 'lottie-react';
 import contactAnimation from '../Assets/animations/Contact.json';
+import InteractiveBackground from './InteractiveBackground';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -137,6 +138,7 @@ function Contact() {
   if (loading && !success && !error) {
     return (
       <div className="detail">
+        <InteractiveBackground />
         <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
         <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
@@ -195,6 +197,7 @@ function Contact() {
 
   return (
     <div className="detail">
+      <InteractiveBackground />
       <h1 className="animate-slide-up">{t.contactTitle}</h1>
       <p className="tagline animate-slide-up">{t.contactTagline}</p>
       

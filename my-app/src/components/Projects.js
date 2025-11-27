@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
 import { FaArrowRight, FaExternalLinkAlt, FaCode } from 'react-icons/fa';
+import InteractiveBackground from './InteractiveBackground';
 
 function Projects({ supabase, user }) {
   const [projects, setProjects] = useState([]);
@@ -70,6 +71,7 @@ function Projects({ supabase, user }) {
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
+        <InteractiveBackground />
         <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
         <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
@@ -167,6 +169,7 @@ function Projects({ supabase, user }) {
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>
+      <InteractiveBackground />
       <h1>{t.projectsTitle}</h1>
       <p className="tagline">{t.projectsTagline}</p>
       
@@ -241,7 +244,7 @@ function Projects({ supabase, user }) {
                 </div>
                 
                 <div className="project-tech-stack">
-                  <h4>TECH_STACK</h4>
+                  <h4>Built With</h4>
                   <div className="tech-tags-grid">
                     {projects[selectedProject].technologies?.map(tech => (
                       <span key={tech} className="tech-tag-large">{tech}</span>

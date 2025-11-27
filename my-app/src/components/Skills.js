@@ -10,6 +10,7 @@ import {
 import Lottie from 'lottie-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
+import InteractiveBackground from './InteractiveBackground';
 
 // Import your Lottie animation (adjust the path as needed)
 import skillsAnimation from '../Assets/animations/skills-animation.json';
@@ -90,6 +91,7 @@ function Skills({ supabase, user }) {
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
+        <InteractiveBackground />
         <div className="skeleton skeleton-title" style={{width: '150px', height: '2.5rem', marginBottom: '1rem'}}></div>
         <div className="skeleton skeleton-tagline" style={{width: '250px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
@@ -172,6 +174,7 @@ function Skills({ supabase, user }) {
 
   return (
     <div className="detail" style={{ marginTop: 0 }}>
+      <InteractiveBackground />
       <h1>{t.skillsTitle}</h1>
       <p className="tagline">{t.skillsTagline}</p>
       
