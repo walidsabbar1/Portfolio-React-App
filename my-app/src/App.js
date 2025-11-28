@@ -26,7 +26,7 @@ const navLinks = [
 
 // Routes configuration
 const routes = [
-  { path: '/', Component: Home, showProfile: true },
+  { path: '/', Component: Home, showProfile: true, isHome: true },
   { path: '/about', Component: About, showProfile: false },
   { path: '/skills', Component: Skills, showProfile: false },
   { path: '/projects', Component: Projects, showProfile: false },
@@ -45,9 +45,9 @@ const NavigationLink = ({ to, children, onNavigate }) => (
 );
 
 // Page Wrapper Component
-const PageWrapper = ({ children, showProfile = false }) => (
+const PageWrapper = ({ children, showProfile = false, isHome = false }) => (
   <div className="container">
-    <div className="main">
+    <div className={`main ${isHome ? 'home-page' : ''}`}>
       {children}
       {showProfile && (
         <div className="images fixed-image">
@@ -424,7 +424,9 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
       <div className="header-container">
         <div className="page-header">
           <div className="logo">
-            <NavLink to="/">Walid Sabbar</NavLink>
+            <NavLink to="/">
+              Walid<span className="logo-light">Sabbar</span><span className="logo-dot">.</span>
+            </NavLink>
           </div>
           <input
             type="checkbox"
@@ -458,7 +460,7 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
                 >
                   <div className="switch-slider"></div>
                   <div className="flag-icon en">
-                    <svg viewBox="0 0 60 30" width="100%" height="100%">
+                    <svg viewBox="0 0 60 30" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
                       <clipPath id="t"><path d="M30,15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath>
                       <path d="M0,0v30h60v-30z" fill="#012169"/>
                       <path d="M0,0l60,30m0-30l-60,30" stroke="#fff" strokeWidth="6"/>
@@ -468,7 +470,7 @@ const Header = ({ menuOpen, setMenuOpen, user, onLogout }) => {
                     </svg>
                   </div>
                   <div className="flag-icon fr">
-                    <svg viewBox="0 0 3 2" width="100%" height="100%">
+                    <svg viewBox="0 0 3 2" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
                       <rect width="1" height="2" fill="#0055A4"/>
                       <rect width="1" height="2" x="1" fill="#FFFFFF"/>
                       <rect width="1" height="2" x="2" fill="#EF4135"/>
@@ -540,13 +542,13 @@ function AppContent() {
   }, []);
 
   const routeElements = useMemo(
-    () => routes.map(({ path, Component, showProfile }) => (
+    () => routes.map(({ path, Component, showProfile, isHome }) => (
       <Route 
         key={path} 
         path={path} 
         element={
           <Suspense fallback={<LoadingFallback route={path} />}>
-            <PageWrapper showProfile={showProfile}>
+            <PageWrapper showProfile={showProfile} isHome={isHome}>
               {Component === Contact ? (
                 <Component />
               ) : (

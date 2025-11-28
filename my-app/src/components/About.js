@@ -7,6 +7,7 @@ import InteractiveBackground from './InteractiveBackground';
 function About({ supabase, user }) {
   const [visitCount, setVisitCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [selectedCard, setSelectedCard] = useState(null);
   const { language } = useLanguage();
   const t = translations[language];
 
@@ -104,28 +105,18 @@ function About({ supabase, user }) {
     );
   }
 
-  return (
-    <div className="detail" style={{ marginTop: 0 }}>
-      <InteractiveBackground />
-      <h1 className="animate-slide-up">{t.aboutTitle}</h1>
-      <p className="tagline animate-slide-up">{t.aboutTagline}</p>
-      
-      <div className="about-cards">
-        <div className="about-card animate-card" style={{animationDelay: '0.1s'}}>
-          <div className="about-card-icon">
-            <i className='bx bx-user'></i>
-          </div>
-          <h2 className="about-card-title">{t.whoIAm}</h2>
+
+
+  const renderCardContent = (type) => {
+    switch (type) {
+      case 'whoIAm':
+        return (
           <p className="about-card-text">
             {t.whoIAmText}
           </p>
-        </div>
-
-        <div className="about-card animate-card" style={{animationDelay: '0.2s'}}>
-          <div className="about-card-icon">
-            <i className='bx bx-book'></i>
-          </div>
-          <h2 className="about-card-title">{t.education}</h2>
+        );
+      case 'education':
+        return (
           <div className="about-card-content">
             <div className="education-item">
               <h3 className="about-card-subtitle">{t.educationItems.license.title}</h3>
@@ -151,13 +142,9 @@ function About({ supabase, user }) {
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="about-card animate-card" style={{animationDelay: '0.3s'}}>
-          <div className="about-card-icon">
-            <i className='bx bx-briefcase'></i>
-          </div>
-          <h2 className="about-card-title">{t.experience}</h2>
+        );
+      case 'experience':
+        return (
           <div className="about-card-content">
             <div className="experience-item">
               <h3 className="about-card-subtitle">{t.experienceItems.sothema.title}</h3>
@@ -175,8 +162,85 @@ function About({ supabase, user }) {
               </p>
             </div>
           </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const getTitle = (type) => {
+    switch (type) {
+      case 'whoIAm': return t.whoIAm;
+      case 'education': return t.education;
+      case 'experience': return t.experience;
+      default: return '';
+    }
+  };
+
+  return (
+    <div className="detail" style={{ marginTop: 0 }}>
+      <InteractiveBackground />
+      <h1 className="animate-slide-up">{t.aboutTitle}</h1>
+      <p className="tagline animate-slide-up">{t.aboutTagline}</p>
+      
+      <div className="about-cards">
+        <div className="about-card animate-card" style={{animationDelay: '0.1s'}}>
+          <div className="about-card-icon">
+            <i className='bx bx-user'></i>
+          </div>
+          <h2 className="about-card-title">{t.whoIAm}</h2>
+          <div className="card-peek-container">
+            {renderCardContent('whoIAm')}
+            <div className="fade-overlay"></div>
+          </div>
+          <button className="read-more-btn" onClick={() => setSelectedCard('whoIAm')}>
+            {t.readMore || 'Read More'}
+          </button>
+        </div>
+
+        <div className="about-card animate-card" style={{animationDelay: '0.2s'}}>
+          <div className="about-card-icon">
+            <i className='bx bx-book'></i>
+          </div>
+          <h2 className="about-card-title">{t.education}</h2>
+          <div className="card-peek-container">
+            {renderCardContent('education')}
+            <div className="fade-overlay"></div>
+          </div>
+          <button className="read-more-btn" onClick={() => setSelectedCard('education')}>
+            {t.readMore || 'Read More'}
+          </button>
+        </div>
+
+        <div className="about-card animate-card" style={{animationDelay: '0.3s'}}>
+          <div className="about-card-icon">
+            <i className='bx bx-briefcase'></i>
+          </div>
+          <h2 className="about-card-title">{t.experience}</h2>
+          <div className="card-peek-container">
+            {renderCardContent('experience')}
+            <div className="fade-overlay"></div>
+          </div>
+          <button className="read-more-btn" onClick={() => setSelectedCard('experience')}>
+            {t.readMore || 'Read More'}
+          </button>
         </div>
       </div>
+
+      {/* Modal */}
+      {selectedCard && (
+        <div className="modal-overlay" onClick={() => setSelectedCard(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={() => setSelectedCard(null)}>
+              <i className='bx bx-x'></i>
+            </button>
+            <h2 className="modal-title">{getTitle(selectedCard)}</h2>
+            <div className="modal-body">
+              {renderCardContent(selectedCard)}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
