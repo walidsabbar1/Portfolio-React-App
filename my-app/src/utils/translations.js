@@ -94,7 +94,7 @@ export const translations = {
     failedTryAgain: 'Échec - Réessayez',
     
     // Footer
-    tagline: 'Développeur Web & Résolveur de Problèmes Créatif',
+
     quickLinks: 'Liens Rapides',
     connect: 'Réseaux',
     rightsReserved: 'Tous droits réservés.',
@@ -198,7 +198,7 @@ export const translations = {
     failedTryAgain: 'Failed - Try Again',
     
     // Footer
-    tagline: 'Web Developer & Creative Problem Solver',
+
     quickLinks: 'Quick Links',
     connect: 'Connect',
     rightsReserved: 'All rights reserved.',

@@ -2,8 +2,38 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
-import { FaArrowRight, FaExternalLinkAlt, FaCode } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaCode, FaTerminal } from 'react-icons/fa';
 import InteractiveBackground from './InteractiveBackground';
+
+// Typewriter Effect Component
+const TypewriterEffect = ({ text, speed = 30, onComplete }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const indexRef = useRef(0);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    setDisplayedText('');
+    indexRef.current = 0;
+    
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    timerRef.current = setInterval(() => {
+      if (indexRef.current < text.length) {
+        setDisplayedText((prev) => prev + text.charAt(indexRef.current));
+        indexRef.current++;
+      } else {
+        clearInterval(timerRef.current);
+        if (onComplete) onComplete();
+      }
+    }, speed);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [text, speed, onComplete]);
+
+  return <span>{displayedText}</span>;
+};
 
 function Projects({ supabase, user }) {
   const [projects, setProjects] = useState([]);
@@ -68,6 +98,12 @@ function Projects({ supabase, user }) {
     }
   }, [selectedProject, projects.length]);
 
+  const handleProjectSelect = (index) => {
+    if (index !== selectedProject) {
+      setSelectedProject(index);
+    }
+  };
+
   if (loading) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
@@ -76,216 +112,198 @@ function Projects({ supabase, user }) {
         <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
         <div className="projects-terminal-container">
-          <div className="projects-terminal">
-            {/* Left Panel - Project List Skeleton */}
-            <div className="projects-list-panel">
-              <div className="panel-header">
-                <div className="panel-dots">
-                  <span className='dot1'></span>
-                  <span className='dot2'></span>
-                  <span className='dot3'></span>
+          <div className="projects-terminal loading-state">
+             <div className="terminal-header-bar">
+                <div className="terminal-controls">
+                  <div className="control red"></div>
+                  <div className="control yellow"></div>
+                  <div className="control green"></div>
                 </div>
-                <span className="panel-title">PROJECTS LIST</span>
-              </div>
-              <div className="projects-list" ref={projectListRef}>
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="project-list-item skeleton-pulse">
-                    <div className="project-list-indicator">
-                      <div className="skeleton skeleton-circle-small" style={{width: '12px', height: '12px'}}></div>
-                    </div>
-                    <div className="project-list-content">
-                      <div className="skeleton skeleton-text" style={{width: '70%', height: '1.2rem', marginBottom: '0.5rem'}}></div>
-                      <div className="project-list-tech">
-                        <div className="skeleton skeleton-text-sm" style={{width: '50px', height: '20px', borderRadius: '12px'}}></div>
-                        <div className="skeleton skeleton-text-sm" style={{width: '40px', height: '20px', borderRadius: '12px'}}></div>
-                        <div className="skeleton skeleton-text-sm" style={{width: '30px', height: '20px', borderRadius: '12px'}}></div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Connection Cables Skeleton */}
-            <div className="terminal-cables">
-              <div className="cable cable-1 skeleton-pulse"></div>
-              <div className="cable cable-2 skeleton-pulse"></div>
-              <div className="cable cable-3 skeleton-pulse"></div>
-            </div>
-
-            {/* Right Panel - Project Details Skeleton */}
-            <div className="project-details-panel">
-              <div className="panel-header">
-                <div className="panel-dots">
-                  <span className='dot1'></span>
-                  <span className='dot2'></span>
-                  <span className='dot3'></span>
+                <div className="terminal-title-bar">LOADING_SYSTEM_DATA...</div>
+             </div>
+             <div className="terminal-body">
+                <div className="loading-matrix">
+                  {[...Array(10)].map((_, i) => (
+                    <div key={i} className="matrix-line skeleton-text" style={{width: `${Math.random() * 50 + 50}%`, opacity: 1 - (i * 0.1)}}></div>
+                  ))}
                 </div>
-                <span className="panel-title">
-                  <div className="skeleton skeleton-text" style={{width: '150px', height: '1rem', display: 'inline-block'}}></div>
-                </span>
-              </div>
-              
-              <div className="project-details-content">
-                {/* Project Description Skeleton */}
-                <div className="project-description">
-                  <div className="skeleton skeleton-text" style={{marginBottom: '0.75rem'}}></div>
-                  <div className="skeleton skeleton-text" style={{width: '95%', marginBottom: '0.75rem'}}></div>
-                  <div className="skeleton skeleton-text" style={{width: '90%', marginBottom: '0.75rem'}}></div>
-                  <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
-                </div>
-                
-                {/* Tech Stack Skeleton */}
-                <div className="project-tech-stack">
-                  <div className="skeleton skeleton-text" style={{width: '120px', height: '1.2rem', marginBottom: '1rem'}}></div>
-                  <div className="tech-tags-grid">
-                    {[1, 2, 3, 4, 5, 6].map(i => (
-                      <div key={i} className="skeleton skeleton-text" style={{
-                        width: `${Math.random() * 40 + 60}px`,
-                        height: '36px',
-                        borderRadius: '20px'
-                      }}></div>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Action Buttons Skeleton */}
-                <div className="project-actions">
-                  <div className="skeleton skeleton-button" style={{width: '140px', height: '44px', borderRadius: '8px'}}></div>
-                  <div className="skeleton skeleton-button" style={{width: '160px', height: '44px', borderRadius: '8px'}}></div>
-                </div>
-                
-                {/* Navigation Hint Skeleton */}
-                <div className="navigation-hint">
-                  <div className="skeleton skeleton-text-sm" style={{width: '250px', height: '0.9rem', margin: '0 auto'}}></div>
-                </div>
-              </div>
-            </div>
+             </div>
           </div>
         </div>
       </div>
     );
   }
 
+  const currentProject = projects[selectedProject];
+
   return (
     <div className="detail" style={{ marginTop: 0 }}>
       <InteractiveBackground />
-      <h1>{t.projectsTitle}</h1>
+      <h1 className="glitch-text" data-text={t.projectsTitle}>{t.projectsTitle}</h1>
       <p className="tagline">{t.projectsTagline}</p>
       
       <div className="projects-terminal-container">
         <div className="projects-terminal">
-          {/* Left Panel - Project List */}
-          <div className="projects-list-panel">
-            <div className="panel-header">
-              <div className="panel-dots">
-                <span className='dot1'></span>
-                <span className='dot2'></span>
-                <span className='dot3'></span>
-              </div>
-              <span className="panel-title">PROJECTS LIST</span>
+          {/* CRT Overlay Effects */}
+          <div className="crt-overlay"></div>
+          <div className="scanline"></div>
+
+          {/* Terminal Header */}
+          <div className="terminal-header-bar">
+            <div className="terminal-controls">
+              <div className="control red"></div>
+              <div className="control yellow"></div>
+              <div className="control green"></div>
             </div>
-            <div className="projects-list" ref={projectListRef}>
-              {projects.length > 0 ? (
-                projects.map((project, index) => (
-                  <div
-                    key={project.id}
-                    className={`project-list-item ${index === selectedProject ? 'selected' : ''}`}
-                    onClick={() => setSelectedProject(index)}
-                  >
-                    <div className="project-list-indicator">
-                      {index === selectedProject && <FaArrowRight className="indicator-arrow" />}
+            <div className="terminal-title-bar">
+              <FaTerminal className="terminal-icon" />
+              <span>root@portfolio:~/projects</span>
+            </div>
+            <div className="terminal-status">
+              <span className="status-dot"></span>
+              LIVE_CONNECTION
+            </div>
+          </div>
+
+          <div className="terminal-content-wrapper">
+            {/* Left Panel - Project List */}
+            <div className="projects-list-panel">
+              <div className="panel-header-simple">
+                <span>AVAILABLE_MODULES</span>
+                <span className="count">[{projects.length}]</span>
+              </div>
+              <div className="projects-list" ref={projectListRef}>
+                {projects.length > 0 ? (
+                  projects.map((project, index) => (
+                    <div
+                      key={project.id}
+                      className={`project-list-item ${index === selectedProject ? 'selected' : ''}`}
+                      onClick={() => handleProjectSelect(index)}
+                    >
+                      <div className="item-status">
+                        {index === selectedProject ? '>' : ' '}
+                      </div>
+                      <div className="item-content">
+                        <span className="item-name">{project.title}</span>
+                        <span className="item-meta">
+                          {project.technologies?.[0] || 'Unknown'}
+                        </span>
+                      </div>
+                      {index === selectedProject && <div className="blinking-cursor">_</div>}
                     </div>
-                    <div className="project-list-content">
-                      <div className="project-list-title">{project.title}</div>
-                      <div className="project-list-tech">
-                        {project.technologies?.slice(0, 2).map(tech => (
-                          <span key={tech} className="tech-badge">{tech}</span>
+                  ))
+                ) : (
+                  <div className="no-projects-message">
+                    {t.noProjects}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Panel - Project Details */}
+            <div className="project-details-panel">
+              <div className="code-editor-header">
+                <div className="tab active">
+                  <FaCode className="tab-icon" />
+                  {currentProject?.title || 'Untitled'}.js
+                </div>
+                <div className="tab">
+                  readme.md
+                </div>
+              </div>
+              
+              <div className="project-details-content">
+                {projects.length > 0 && currentProject ? (
+                  <>
+                    <div className="code-line comment">
+                      <span className="line-number">01</span>
+                      <span>{`// ${currentProject.title} - System Description`}</span>
+                    </div>
+                    <div className="code-line">
+                      <span className="line-number">02</span>
+                      <span className="keyword">const</span> <span className="variable">project</span> = <span className="brace">{'{'}</span>
+                    </div>
+                    <div className="code-line">
+                      <span className="line-number">03</span>
+                      &nbsp;&nbsp;<span className="property">description</span>: <span className="string">"
+                        <TypewriterEffect 
+                          text={currentProject.description} 
+                          speed={20} 
+                        />"</span>,
+                    </div>
+                    <div className="code-line">
+                      <span className="line-number">04</span>
+                      &nbsp;&nbsp;<span className="property">technologies</span>: [
+                    </div>
+                    <div className="code-line">
+                      <span className="line-number">05</span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <div className="tech-stack-display">
+                        {currentProject.technologies?.map((tech, i) => (
+                          <span key={tech} className="tech-token">
+                            <span className="string">'{tech}'</span>{i < currentProject.technologies.length - 1 ? ',' : ''}
+                          </span>
                         ))}
-                        {project.technologies?.length > 2 && (
-                          <span className="tech-badge">+{project.technologies.length - 2}</span>
-                        )}
                       </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <div className="no-projects-message">
-                  {t.noProjects}
-                </div>
-              )}
-            </div>
-          </div>
+                    <div className="code-line">
+                      <span className="line-number">06</span>
+                      &nbsp;&nbsp;],
+                    </div>
+                    <div className="code-line">
+                      <span className="line-number">07</span>
+                      &nbsp;&nbsp;<span className="property">actions</span>: <span className="brace">{'{'}</span>
+                    </div>
+                    <div className="code-line">
+                      <span className="line-number">08</span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<span className="comment">{`// Initialize connection protocols`}</span>
+                    </div>
+                    
+                    <div className="project-actions-area">
+                      {currentProject.project_url && (
+                        <a 
+                          href={currentProject.project_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="terminal-btn primary"
+                        >
+                          <FaExternalLinkAlt /> LAUNCH_DEMO()
+                        </a>
+                      )}
+                      {currentProject.code_url && (
+                        <a 
+                          href={currentProject.code_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="terminal-btn secondary"
+                        >
+                          <FaCode /> VIEW_SOURCE()
+                        </a>
+                      )}
+                    </div>
 
-          {/* Connection Cables */}
-          <div className="terminal-cables">
-            <div className="cable cable-1"></div>
-            <div className="cable cable-2"></div>
-            <div className="cable cable-3"></div>
-          </div>
-
-          {/* Right Panel - Project Details */}
-          <div className="project-details-panel">
-            <div className="panel-header">
-              <div className="panel-dots">
-                <span className='dot1'></span>
-                <span className='dot2'></span>
-                <span className='dot3'></span>
-              </div>
-              <span className="panel-title">
-                {projects[selectedProject]?.title || 'NO_PROJECT_SELECTED'}
-              </span>
-            </div>
-            
-            {projects.length > 0 ? (
-              <div className="project-details-content">
-                <div className="project-description">
-                  {projects[selectedProject].description}
-                </div>
-                
-                <div className="project-tech-stack">
-                  <h4>Built With</h4>
-                  <div className="tech-tags-grid">
-                    {projects[selectedProject].technologies?.map(tech => (
-                      <span key={tech} className="tech-tag-large">{tech}</span>
-                    ))}
+                    <div className="code-line">
+                      <span className="line-number">09</span>
+                      &nbsp;&nbsp;<span className="brace">{'}'}</span>
+                    </div>
+                    <div className="code-line">
+                      <span className="line-number">10</span>
+                      <span className="brace">{'}'}</span>;
+                    </div>
+                  </>
+                ) : (
+                  <div className="no-projects-details">
+                    <p>{t.noProjects}</p>
                   </div>
-                </div>
-                
-                <div className="project-actions">
-                  {projects[selectedProject].project_url && (
-                    <a 
-                      href={projects[selectedProject].project_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-action-btn live-demo"
-                    >
-                      <FaExternalLinkAlt className="btn-icon" />
-                      {t.viewProject}
-                    </a>
-                  )}
-                  {projects[selectedProject].code_url && (
-                    <a 
-                      href={projects[selectedProject].code_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-action-btn source-code"
-                    >
-                      <FaCode className="btn-icon" />
-                      SOURCE_CODE
-                    </a>
-                  )}
-                </div>
-                
-                <div className="navigation-hint">
-                  <span>↑↓ Navigate with arrow keys • ↩ Select project</span>
-                </div>
+                )}
               </div>
-            ) : (
-              <div className="no-projects-details">
-                <p>{t.noProjects}</p>
+              
+              <div className="terminal-footer">
+                <span>UTF-8</span>
+                <span>JavaScript</span>
+                <span>Ln 3, Col 12</span>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

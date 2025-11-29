@@ -3,18 +3,20 @@ import { useEffect, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
 import InteractiveBackground from './InteractiveBackground';
+import pfp from '../Assets/images/pfpwebp.webp';
+import cv from '../Assets/Walid_Sabbar_cv.pdf';
 
 function About({ supabase, user }) {
   const [visitCount, setVisitCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [activeTab, setActiveTab] = useState('bio');
   const { language } = useLanguage();
   const t = translations[language];
 
   useEffect(() => {
     const trackVisit = async () => {
       try {
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('page_visits')
           .insert([
             {
@@ -53,51 +55,51 @@ function About({ supabase, user }) {
     return (
       <div className="detail" style={{ marginTop: 0 }}>
         <InteractiveBackground />
-        <div className="skeleton skeleton-title" style={{width: '200px', height: '2.5rem', marginBottom: '1rem'}}></div>
-        <div className="skeleton skeleton-tagline" style={{width: '300px', height: '1.5rem', marginBottom: '2rem'}}></div>
         
-        <div className="about-cards">
-          {/* Who I Am Card Skeleton */}
-          <div className="about-card">
-            <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
-            <div className="skeleton skeleton-text" style={{width: '60%', height: '1.75rem', marginBottom: '1rem'}}></div>
-            <div className="skeleton skeleton-text" style={{marginBottom: '0.75rem'}}></div>
-            <div className="skeleton skeleton-text" style={{width: '95%', marginBottom: '0.75rem'}}></div>
-            <div className="skeleton skeleton-text" style={{width: '90%', marginBottom: '0.75rem'}}></div>
-            <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
-          </div>
+        <div className="about-dashboard">
+          {/* Left Panel: Profile Skeleton */}
+          <div className="profile-panel">
+            <div className="profile-card">
+              <div className="profile-image-container">
+                <div className="skeleton skeleton-circle-large" style={{width: '100%', height: '100%'}}></div>
+              </div>
+              <div className="skeleton skeleton-title" style={{width: '60%', height: '2rem', margin: '0 auto 0.5rem'}}></div>
+              <div className="skeleton skeleton-text" style={{width: '40%', height: '1rem', margin: '0 auto 2rem'}}></div>
+              
+              <div className="profile-actions" style={{marginBottom: '2rem'}}>
+                <div className="skeleton skeleton-button" style={{width: '100%', height: '3rem'}}></div>
+              </div>
 
-          {/* Education Card Skeleton */}
-          <div className="about-card">
-            <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
-            <div className="skeleton skeleton-text" style={{width: '50%', height: '1.75rem', marginBottom: '1.5rem'}}></div>
-            
-            <div className="about-card-content">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="education-item" style={{marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(26, 29, 33, 0.1)'}}>
-                  <div className="skeleton skeleton-text" style={{width: '70%', height: '1.25rem', marginBottom: '0.5rem'}}></div>
-                  <div className="skeleton skeleton-text-sm" style={{width: '40%', height: '1rem', marginBottom: '0.75rem'}}></div>
-                  <div className="skeleton skeleton-text" style={{marginBottom: '0.5rem', width: '95%'}}></div>
-                  <div className="skeleton skeleton-text" style={{width: '90%'}}></div>
-                </div>
-              ))}
+              <div className="profile-social" style={{justifyContent: 'center'}}>
+                <div className="skeleton skeleton-circle-small" style={{width: '40px', height: '40px', margin: '0 0.5rem'}}></div>
+                <div className="skeleton skeleton-circle-small" style={{width: '40px', height: '40px', margin: '0 0.5rem'}}></div>
+                <div className="skeleton skeleton-circle-small" style={{width: '40px', height: '40px', margin: '0 0.5rem'}}></div>
+              </div>
             </div>
           </div>
 
-          {/* Experience Card Skeleton */}
-          <div className="about-card">
-            <div className="skeleton skeleton-icon" style={{width: '3.5rem', height: '3.5rem', borderRadius: '10px', marginBottom: '1.25rem'}}></div>
-            <div className="skeleton skeleton-text" style={{width: '60%', height: '1.75rem', marginBottom: '1.5rem'}}></div>
-            
-            <div className="about-card-content">
-              {[1, 2].map(i => (
-                <div key={i} className="experience-item" style={{marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(26, 29, 33, 0.1)'}}>
-                  <div className="skeleton skeleton-text" style={{width: '80%', height: '1.25rem', marginBottom: '0.5rem'}}></div>
-                  <div className="skeleton skeleton-text-sm" style={{width: '35%', height: '1rem', marginBottom: '0.75rem'}}></div>
-                  <div className="skeleton skeleton-text" style={{marginBottom: '0.5rem', width: '95%'}}></div>
-                  <div className="skeleton skeleton-text" style={{width: '85%'}}></div>
-                </div>
-              ))}
+          {/* Right Panel: Content Skeleton */}
+          <div className="content-panel">
+            <div className="dashboard-tabs" style={{marginBottom: '2rem'}}>
+              <div className="skeleton skeleton-button" style={{width: '120px', height: '40px'}}></div>
+              <div className="skeleton skeleton-button" style={{width: '120px', height: '40px'}}></div>
+              <div className="skeleton skeleton-button" style={{width: '120px', height: '40px'}}></div>
+            </div>
+
+            <div className="dashboard-content">
+              <div className="about-content-section">
+                  <div className="skeleton skeleton-title" style={{width: '150px', height: '2rem', marginBottom: '1.5rem'}}></div>
+                  <div className="skeleton skeleton-text" style={{width: '100%', marginBottom: '0.5rem'}}></div>
+                  <div className="skeleton skeleton-text" style={{width: '95%', marginBottom: '0.5rem'}}></div>
+                  <div className="skeleton skeleton-text" style={{width: '90%', marginBottom: '0.5rem'}}></div>
+                  <div className="skeleton skeleton-text" style={{width: '85%', marginBottom: '2rem'}}></div>
+                  
+                  <div className="stats-grid">
+                      <div className="skeleton skeleton-card" style={{height: '100px'}}></div>
+                      <div className="skeleton skeleton-card" style={{height: '100px'}}></div>
+                      <div className="skeleton skeleton-card" style={{height: '100px'}}></div>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
@@ -105,61 +107,105 @@ function About({ supabase, user }) {
     );
   }
 
-
-
-  const renderCardContent = (type) => {
-    switch (type) {
-      case 'whoIAm':
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'bio':
         return (
-          <p className="about-card-text">
-            {t.whoIAmText}
-          </p>
+          <div className="about-content-section animate-fade-in">
+            <h3 className="section-title">
+              <span className="hash">#</span> {t.whoIAm}
+            </h3>
+            <div className="bio-text">
+              {t.whoIAmText.split('\n').map((line, i) => (
+                <p key={i}>{line}</p>
+              ))}
+            </div>
+            <div className="stats-grid">
+              <div className="stat-item">
+                <span className="stat-number">2+</span>
+                <span className="stat-label">{t.level?.advanced ? 'Years Exp.' : 'Années Exp.'}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">10+</span>
+                <span className="stat-label">{t.projectsTitle}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">{visitCount}</span>
+                <span className="stat-label">Profile Views</span>
+              </div>
+            </div>
+          </div>
         );
       case 'education':
         return (
-          <div className="about-card-content">
-            <div className="education-item">
-              <h3 className="about-card-subtitle">{t.educationItems.license.title}</h3>
-              <p className="education-period">{t.educationItems.license.period}</p>
-              <p className="about-card-text">
-                {t.educationItems.license.description}
-              </p>
-            </div>
-            
-            <div className="education-item">
-              <h3 className="about-card-subtitle">{t.educationItems.fullstack.title}</h3>
-              <p className="education-period">{t.educationItems.fullstack.period}</p>
-              <p className="about-card-text">
-                {t.educationItems.fullstack.description}
-              </p>
-            </div>
-            
-            <div className="education-item">
-              <h3 className="about-card-subtitle">{t.educationItems.bac.title}</h3>
-              <p className="education-period">{t.educationItems.bac.period}</p>
-              <p className="about-card-text">
-                {t.educationItems.bac.description}
-              </p>
+          <div className="about-content-section animate-fade-in">
+            <h3 className="section-title">
+              <span className="hash">#</span> {t.education}
+            </h3>
+            <div className="timeline">
+              <div className="timeline-item">
+                <div className="timeline-marker"></div>
+                <div className="timeline-content">
+                  <span className="timeline-date">{t.educationItems.fullstack.period}</span>
+                  <h4 className="timeline-title">{t.educationItems.fullstack.title}</h4>
+                  <p className="timeline-subtitle">OFPPT Casablanca</p>
+                  <p className="timeline-desc">{t.educationItems.fullstack.description}</p>
+                </div>
+              </div>
+              <div className="timeline-item">
+                <div className="timeline-marker"></div>
+                <div className="timeline-content">
+                  <span className="timeline-date">2021 - 2024</span>
+                  <h4 className="timeline-title">{t.educationItems.license.title}</h4>
+                  <p className="timeline-subtitle">{t.educationItems.license.period}</p>
+                  <p className="timeline-desc">{t.educationItems.license.description}</p>
+                </div>
+              </div>
+              <div className="timeline-item">
+                <div className="timeline-marker"></div>
+                <div className="timeline-content">
+                  <span className="timeline-date">{t.educationItems.bac.period}</span>
+                  <h4 className="timeline-title">{t.educationItems.bac.title}</h4>
+                  <p className="timeline-subtitle">Lycée Othman Ibn Affane</p>
+                  <p className="timeline-desc">{t.educationItems.bac.description}</p>
+                </div>
+              </div>
             </div>
           </div>
         );
       case 'experience':
         return (
-          <div className="about-card-content">
-            <div className="experience-item">
-              <h3 className="about-card-subtitle">{t.experienceItems.sothema.title}</h3>
-              <p className="experience-period">{t.experienceItems.sothema.period}</p>
-              <p className="about-card-text">
-                {t.experienceItems.sothema.description}
-              </p>
-            </div>
-            
-            <div className="experience-item">
-              <h3 className="about-card-subtitle">{t.experienceItems.hackathon.title}</h3>
-              <p className="experience-period">{t.experienceItems.hackathon.period}</p>
-              <p className="about-card-text">
-                {t.experienceItems.hackathon.description}
-              </p>
+          <div className="about-content-section animate-fade-in">
+            <h3 className="section-title">
+              <span className="hash">#</span> {t.experience}
+            </h3>
+            <div className="experience-list">
+              <div className="experience-card">
+                <div className="exp-header">
+                  <h4 className="exp-title">{t.experienceItems.sothema.title}</h4>
+                  <span className="exp-company">SOTHEMA</span>
+                  <span className="exp-date">{t.experienceItems.sothema.period}</span>
+                </div>
+                <p className="exp-desc">{t.experienceItems.sothema.description}</p>
+                <div className="exp-tech">
+                  <span>React</span>
+                  <span>Laravel</span>
+                  <span>MySQL</span>
+                </div>
+              </div>
+              <div className="experience-card">
+                <div className="exp-header">
+                  <h4 className="exp-title">{t.experienceItems.hackathon.title}</h4>
+                  <span className="exp-company">ISGI Hackathon</span>
+                  <span className="exp-date">{t.experienceItems.hackathon.period}</span>
+                </div>
+                <p className="exp-desc">{t.experienceItems.hackathon.description}</p>
+                <div className="exp-tech">
+                  <span>Teamwork</span>
+                  <span>Innovation</span>
+                  <span>Prototyping</span>
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -168,79 +214,78 @@ function About({ supabase, user }) {
     }
   };
 
-  const getTitle = (type) => {
-    switch (type) {
-      case 'whoIAm': return t.whoIAm;
-      case 'education': return t.education;
-      case 'experience': return t.experience;
-      default: return '';
-    }
-  };
-
   return (
     <div className="detail" style={{ marginTop: 0 }}>
       <InteractiveBackground />
-      <h1 className="animate-slide-up">{t.aboutTitle}</h1>
-      <p className="tagline animate-slide-up">{t.aboutTagline}</p>
       
-      <div className="about-cards">
-        <div className="about-card animate-card" style={{animationDelay: '0.1s'}}>
-          <div className="about-card-icon">
-            <i className='bx bx-user'></i>
-          </div>
-          <h2 className="about-card-title">{t.whoIAm}</h2>
-          <div className="card-peek-container">
-            {renderCardContent('whoIAm')}
-            <div className="fade-overlay"></div>
-          </div>
-          <button className="read-more-btn" onClick={() => setSelectedCard('whoIAm')}>
-            {t.readMore || 'Read More'}
-          </button>
-        </div>
+      <div className="about-dashboard">
+        {/* Left Panel: Profile */}
+        <div className="profile-panel">
+          <div className="profile-card">
+            <div className="profile-image-container">
+              <div className="profile-image-placeholder">
+                <img src={pfp} alt="Walid Sabbar" className="profile-image" />
+              </div>
+              <div className="status-badge">
+                <span className="status-dot"></span>
+                Available
+              </div>
+            </div>
+            <h2 className="profile-name">Walid Sabbar</h2>
+            <p className="profile-role">Full Stack Developer</p>
+            
+            <div className="profile-actions">
+              <a 
+                href={cv} 
+                download="Walid_Sabbar_CV.pdf"
+                className="cv-btn primary"
+                style={{
+                  textDecoration: 'none', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center'
+                }}
+              >
+                <i className='bx bx-download'></i> {t.downloadCv}
+              </a>
+            </div>
 
-        <div className="about-card animate-card" style={{animationDelay: '0.2s'}}>
-          <div className="about-card-icon">
-            <i className='bx bx-book'></i>
-          </div>
-          <h2 className="about-card-title">{t.education}</h2>
-          <div className="card-peek-container">
-            {renderCardContent('education')}
-            <div className="fade-overlay"></div>
-          </div>
-          <button className="read-more-btn" onClick={() => setSelectedCard('education')}>
-            {t.readMore || 'Read More'}
-          </button>
-        </div>
-
-        <div className="about-card animate-card" style={{animationDelay: '0.3s'}}>
-          <div className="about-card-icon">
-            <i className='bx bx-briefcase'></i>
-          </div>
-          <h2 className="about-card-title">{t.experience}</h2>
-          <div className="card-peek-container">
-            {renderCardContent('experience')}
-            <div className="fade-overlay"></div>
-          </div>
-          <button className="read-more-btn" onClick={() => setSelectedCard('experience')}>
-            {t.readMore || 'Read More'}
-          </button>
-        </div>
-      </div>
-
-      {/* Modal */}
-      {selectedCard && (
-        <div className="modal-overlay" onClick={() => setSelectedCard(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="modal-close-btn" onClick={() => setSelectedCard(null)}>
-              <i className='bx bx-x'></i>
-            </button>
-            <h2 className="modal-title">{getTitle(selectedCard)}</h2>
-            <div className="modal-body">
-              {renderCardContent(selectedCard)}
+            <div className="profile-social">
+              <a href="#" className="social-link" aria-label="GitHub"><i className='bx bxl-github'></i></a>
+              <a href="#" className="social-link" aria-label="LinkedIn"><i className='bx bxl-linkedin'></i></a>
+              <a href="#" className="social-link" aria-label="Twitter"><i className='bx bxl-twitter'></i></a>
             </div>
           </div>
         </div>
-      )}
+
+        {/* Right Panel: Content */}
+        <div className="content-panel">
+          <div className="dashboard-tabs">
+            <button 
+              className={`tab-btn ${activeTab === 'bio' ? 'active' : ''}`}
+              onClick={() => setActiveTab('bio')}
+            >
+              <i className='bx bx-user'></i> {t.whoIAm}
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === 'education' ? 'active' : ''}`}
+              onClick={() => setActiveTab('education')}
+            >
+              <i className='bx bx-book'></i> {t.education}
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === 'experience' ? 'active' : ''}`}
+              onClick={() => setActiveTab('experience')}
+            >
+              <i className='bx bx-briefcase'></i> {t.experience}
+            </button>
+          </div>
+
+          <div className="dashboard-content">
+            {renderContent()}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

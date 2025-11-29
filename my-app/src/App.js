@@ -500,7 +500,7 @@ function AppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [currentPath, setCurrentPath] = useState('/');
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   // Check active sessions and subscribe to auth changes
   useEffect(() => {
