@@ -251,9 +251,8 @@ function About({ supabase, user }) {
             </div>
 
             <div className="profile-social">
-              <a href="#" className="social-link" aria-label="GitHub"><i className='bx bxl-github'></i></a>
-              <a href="#" className="social-link" aria-label="LinkedIn"><i className='bx bxl-linkedin'></i></a>
-              <a href="#" className="social-link" aria-label="Twitter"><i className='bx bxl-twitter'></i></a>
+              <a href="https://github.com/walidsabbar1" className="social-link" aria-label="GitHub"><i className='bx bxl-github'></i></a>
+              <a href="https://www.linkedin.com/in/walid-sabbar-5262152a0/" className="social-link" aria-label="LinkedIn"><i className='bx bxl-linkedin'></i></a>
             </div>
           </div>
         </div>

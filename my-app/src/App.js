@@ -13,7 +13,6 @@ const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
 const Projects = lazy(() => import('./components/Projects'));
 const Contact = lazy(() => import('./components/Contact'));
-const Footer = lazy(() => import('./components/Footer'));
 
 // Navigation configuration
 const navLinks = [
@@ -26,7 +25,7 @@ const navLinks = [
 
 // Routes configuration
 const routes = [
-  { path: '/', Component: Home, showProfile: true, isHome: true },
+  { path: '/', Component: Home, showProfile: false, isHome: true },
   { path: '/about', Component: About, showProfile: false },
   { path: '/skills', Component: Skills, showProfile: false },
   { path: '/projects', Component: Projects, showProfile: false },
@@ -62,36 +61,78 @@ const PageWrapper = ({ children, showProfile = false, isHome = false }) => (
 const SkeletonHome = () => (
   <PageWrapper showProfile={false}>
     <div className="detail home-animate">
-      <div className="skeleton skeleton-text" style={{
-        width: '150px', 
-        height: '1.4rem', 
-        marginBottom: '0.25rem'
-      }}></div>
-      
-      <div className="skeleton skeleton-title" style={{
-        height: '3.5rem',
-        marginBottom: '0.75rem',
-        width: '300px'
-      }}></div>
-      
-      <div className="skeleton skeleton-tagline" style={{
-        width: '400px',
-        height: '1.2rem',
-        marginBottom: '1.25rem'
-      }}></div>
-      
-      <div className="social">
-        {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className="skeleton skeleton-button" style={{
-            width: '3.2rem',
-            height: '3.2rem',
-            borderRadius: '8px'
+      <div className="home-container">
+        {/* Left Side - Text Content Skeleton */}
+        <div className="home-content">
+          {/* Intro Badge Skeleton */}
+          <div className="skeleton" style={{ 
+            width: '140px', 
+            height: '2.2rem', 
+            borderRadius: '50px', 
+            marginBottom: '1rem' 
           }}></div>
-        ))}
+          
+          {/* Title Skeleton */}
+          <div className="skeleton" style={{ 
+            width: '80%', 
+            height: '4rem', 
+            marginBottom: '1rem' 
+          }}></div>
+          
+          {/* Typewriter Skeleton */}
+          <div className="skeleton" style={{ 
+            width: '60%', 
+            height: '2rem', 
+            marginBottom: '1.5rem' 
+          }}></div>
+          
+          {/* Description Skeleton */}
+          <div className="skeleton" style={{ 
+            width: '100%', 
+            height: '1.1rem', 
+            marginBottom: '0.5rem' 
+          }}></div>
+          <div className="skeleton" style={{ 
+            width: '90%', 
+            height: '1.1rem', 
+            marginBottom: '2rem' 
+          }}></div>
+          
+          {/* Actions Skeleton */}
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <div className="skeleton" style={{ 
+              width: '160px', 
+              height: '3.5rem', 
+              borderRadius: '50px' 
+            }}></div>
+            <div className="skeleton" style={{ 
+              width: '160px', 
+              height: '3.5rem', 
+              borderRadius: '50px' 
+            }}></div>
+          </div>
+          
+          {/* Social Links Skeleton */}
+          <div style={{ display: 'flex', gap: '1.5rem', marginTop: '2rem' }}>
+             {[1, 2, 3, 4].map(i => (
+               <div key={i} className="skeleton" style={{ 
+                 width: '2rem', 
+                 height: '2rem', 
+                 borderRadius: '50%' 
+               }}></div>
+             ))}
+          </div>
+        </div>
+        
+        {/* Right Side - Image Skeleton */}
+        <div className="home-image-section">
+           <div className="skeleton" style={{ 
+             width: '320px', 
+             height: '420px', 
+             borderRadius: '24px' 
+           }}></div>
+        </div>
       </div>
-    </div>
-    <div className="skeleton-profile-container fixed-image">
-      <div className="skeleton-profile-image"></div>
     </div>
   </PageWrapper>
 );
@@ -573,7 +614,6 @@ function AppContent() {
         />
         <LoadingFallback route={currentPath} />
         <Suspense fallback={null}>
-          <Footer />
         </Suspense>
       </BrowserRouter>
     );
@@ -591,7 +631,6 @@ function AppContent() {
         {routeElements}
       </Routes>
       <Suspense fallback={null}>
-        <Footer />
       </Suspense>
     </BrowserRouter>
   );

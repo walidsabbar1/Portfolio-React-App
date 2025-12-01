@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import { FaUser, FaEnvelope, FaPaperPlane, FaMapMarkerAlt, FaClock, FaCheck, FaTimes, FaPhone } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
-import Lottie from 'lottie-react';
-import contactAnimation from '../Assets/animations/Contact.json';
 import InteractiveBackground from './InteractiveBackground';
 
 function Contact() {
@@ -156,11 +154,6 @@ function Contact() {
                 </div>
               </div>
             ))}
-            
-            {/* Animation placeholder skeleton */}
-            <div className="contact-animation-container">
-              <div className="skeleton" style={{width: '150px', height: '150px', borderRadius: '12px'}}></div>
-            </div>
           </div>
 
           {/* Contact Form Skeleton */}
@@ -235,22 +228,6 @@ function Contact() {
               <strong>{t.responseTime}</strong>
               <p>{t.within24Hours}</p>
             </div>
-          </div>
-          
-          {/* Lottie Animation */}
-          <div className="contact-animation-container">
-            <Lottie 
-              animationData={contactAnimation}
-              loop={true}
-              autoplay={true}
-              style={{
-                width: '150px',
-                height: '150px',
-                position: 'absolute',
-                bottom: '20px',
-                right: '20px'
-              }}
-            />
           </div>
         </div>
 
