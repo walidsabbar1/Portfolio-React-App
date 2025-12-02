@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
 import InteractiveBackground from './InteractiveBackground';
-import pfp from '../Assets/images/pfp.png';
+import pfp from '../Assets/images/pfpwebp.webp';
 import cv from '../Assets/Walid_Sabbar_cv.pdf';
 
 function About({ supabase, user }) {

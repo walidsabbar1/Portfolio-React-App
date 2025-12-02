@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
 
-import pfp from '../Assets/images/pfp.png';
+import pfp from '../Assets/images/pfpwebp.webp';
 import InteractiveBackground from './InteractiveBackground';
 
 function Home() {
