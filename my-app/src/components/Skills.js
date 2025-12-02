@@ -19,28 +19,7 @@ const iconComponents = {
   SiTypescript, SiTailwindcss, SiFigma
 };
 
-const categoryDescriptions = {
-  'All': {
-    title: "Full Stack Journey",
-    description: "My technical journey spans across the entire web development stack. From crafting pixel-perfect user interfaces to architecting robust backend systems, I thrive on solving complex problems with modern technologies. I am constantly learning and adapting to the latest industry trends to build scalable and efficient applications."
-  },
-  'Frontend': {
-    title: "Crafting Experiences",
-    description: "I specialize in building responsive, accessible, and performant user interfaces. My passion lies in creating seamless user experiences using modern frameworks like React and styling solutions like Tailwind CSS. I pay close attention to detail, animations, and interactivity to bring designs to life."
-  },
-  'Backend': {
-    title: "Server-Side Logic",
-    description: "On the backend, I focus on building secure and scalable APIs. Whether it's designing database schemas, optimizing queries, or implementing authentication flows, I ensure that the server-side logic is robust and efficient. I have experience with Node.js, PHP, and various database technologies."
-  },
-  'Tools': {
-    title: "Workflow & DevOps",
-    description: "I utilize a suite of powerful tools to streamline my development workflow. From version control with Git to design collaboration in Figma, these tools help me maintain code quality, collaborate effectively, and deliver projects on time."
-  },
-  'Database': {
-    title: "Data Management",
-    description: "Data is the core of any application. I have experience designing normalized relational schemas with MySQL and working with flexible document stores like MongoDB. I understand the importance of data integrity, indexing, and efficient retrieval strategies."
-  }
-};
+
 
 function Skills({ supabase, user }) {
   const [skills, setSkills] = useState([]);
@@ -107,7 +86,7 @@ function Skills({ supabase, user }) {
     }
   };
 
-  const currentDescription = categoryDescriptions[activeCategory] || categoryDescriptions['All'];
+  const currentDescription = t.skillsCategories?.[activeCategory] || t.skillsCategories?.['All'] || { title: '', description: '' };
 
   if (loading) {
     return (

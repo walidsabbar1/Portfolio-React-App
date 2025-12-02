@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../utils/translations';
-import cv from '../Assets/Walid_Sabbar_cv.pdf';
-import pfp from '../Assets/images/pfpwebp.webp';
+
+import pfp from '../Assets/images/pfp.png';
 import InteractiveBackground from './InteractiveBackground';
 
 function Home() {
@@ -17,10 +17,6 @@ function Home() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(150);
-  
-  // 3D Tilt effect state
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
   
   const cardRef = useRef(null);
 
@@ -49,30 +45,6 @@ function Home() {
     const timer = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, loopNum, typingSpeed, t.tagline]);
-
-  // 3D Tilt logic
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    
-    const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateXValue = ((y - centerY) / centerY) * 10; // Max rotation deg
-    const rotateYValue = ((centerX - x) / centerX) * 10;
-    
-    setRotateX(rotateXValue);
-    setRotateY(rotateYValue);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
 
   useEffect(() => {
     document.body.classList.add('page-loaded');
@@ -107,9 +79,6 @@ function Home() {
             <a href="#contact" onClick={(e) => { e.preventDefault(); navigate('/contact'); }} className="primary-btn">
               {t.letsConnect} <i className='bx bx-right-arrow-alt'></i>
             </a>
-            <a href={cv} download="Walid_Sabbar_CV.pdf" className="secondary-btn">
-              {t.downloadCv} <i className='bx bx-download'></i>
-            </a>
           </div>
           
           <div className="social-links-minimal animate-fade-in" style={{animationDelay: '0.6s'}}>
@@ -133,11 +102,6 @@ function Home() {
           <div 
             className="profile-card-3d"
             ref={cardRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-              transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
-            }}
           >
             <div className="card-content">
               <div className="image-wrapper">

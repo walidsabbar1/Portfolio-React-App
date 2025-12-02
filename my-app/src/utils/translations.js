@@ -71,6 +71,28 @@ export const translations = {
       intermediate: 'Intermédiaire',
       advanced: 'Avancé'
     },
+    skillsCategories: {
+      All: {
+        title: "Parcours Full Stack",
+        description: "Mon parcours technique couvre l'ensemble de la stack de développement web. De la création d'interfaces utilisateur au pixel près à l'architecture de systèmes backend robustes, je m'épanouis dans la résolution de problèmes complexes avec des technologies modernes. Je suis constamment en train d'apprendre et de m'adapter aux dernières tendances de l'industrie pour construire des applications évolutives et efficaces."
+      },
+      Frontend: {
+        title: "Création d'Expériences",
+        description: "Je me spécialise dans la construction d'interfaces utilisateur réactives, accessibles et performantes. Ma passion réside dans la création d'expériences utilisateur fluides en utilisant des frameworks modernes comme React et des solutions de style comme Tailwind CSS. Je porte une attention particulière aux détails, aux animations et à l'interactivité pour donner vie aux designs."
+      },
+      Backend: {
+        title: "Logique Côté Serveur",
+        description: "Côté backend, je me concentre sur la construction d'API sécurisées et évolutives. Qu'il s'agisse de concevoir des schémas de base de données, d'optimiser des requêtes ou d'implémenter des flux d'authentification, je m'assure que la logique côté serveur est robuste et efficace. J'ai de l'expérience avec Node.js, PHP et diverses technologies de base de données."
+      },
+      Tools: {
+        title: "Workflow & DevOps",
+        description: "J'utilise une suite d'outils puissants pour rationaliser mon flux de développement. Du contrôle de version avec Git à la collaboration de conception dans Figma, ces outils m'aident à maintenir la qualité du code, à collaborer efficacement et à livrer les projets à temps."
+      },
+      Database: {
+        title: "Gestion de Données",
+        description: "Les données sont au cœur de toute application. J'ai de l'expérience dans la conception de schémas relationnels normalisés avec MySQL et le travail avec des magasins de documents flexibles comme MongoDB. Je comprends l'importance de l'intégrité des données, de l'indexation et des stratégies de récupération efficaces."
+      }
+    },
     
     // Projects
     projectsTitle: 'Projets',
@@ -174,6 +196,28 @@ export const translations = {
       basic: 'Basic',
       intermediate: 'Intermediate',
       advanced: 'Advanced'
+    },
+    skillsCategories: {
+      All: {
+        title: "Full Stack Journey",
+        description: "My technical journey spans across the entire web development stack. From crafting pixel-perfect user interfaces to architecting robust backend systems, I thrive on solving complex problems with modern technologies. I am constantly learning and adapting to the latest industry trends to build scalable and efficient applications."
+      },
+      Frontend: {
+        title: "Crafting Experiences",
+        description: "I specialize in building responsive, accessible, and performant user interfaces. My passion lies in creating seamless user experiences using modern frameworks like React and styling solutions like Tailwind CSS. I pay close attention to detail, animations, and interactivity to bring designs to life."
+      },
+      Backend: {
+        title: "Server-Side Logic",
+        description: "On the backend, I focus on building secure and scalable APIs. Whether it's designing database schemas, optimizing queries, or implementing authentication flows, I ensure that the server-side logic is robust and efficient. I have experience with Node.js, PHP, and various database technologies."
+      },
+      Tools: {
+        title: "Workflow & DevOps",
+        description: "I utilize a suite of powerful tools to streamline my development workflow. From version control with Git to design collaboration in Figma, these tools help me maintain code quality, collaborate effectively, and deliver projects on time."
+      },
+      Database: {
+        title: "Data Management",
+        description: "Data is the core of any application. I have experience designing normalized relational schemas with MySQL and working with flexible document stores like MongoDB. I understand the importance of data integrity, indexing, and efficient retrieval strategies."
+      }
     },
     
     // Projects

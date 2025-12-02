@@ -222,7 +222,7 @@ header {
   margin: 0;
   padding: 0 2rem;
 }
-.container{
+.container {
   margin: 0 6% 0 6%;
   padding: 0 2rem;
 }
@@ -516,7 +516,6 @@ nav li a.active {
   transition: opacity 0.3s ease;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid var(--color-inter);
 }
 .flag-icon svg {
   width: 100%;
@@ -2979,11 +2978,13 @@ nav ul {
   .timeline {
     padding-left: 1rem;
   }
-  font-size: 0.85rem;
-  color: var(--gray-medium);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  .timeline-date {
+    font-size: 0.85rem;
+    color: var(--gray-medium);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 }
 .timeline {
   position: relative;
@@ -3697,7 +3698,7 @@ nav ul {
 .stat-label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--gray-dark);
+  color: var(--color-inter);
 }
 
 .skills-filter-bar {
@@ -3713,7 +3714,7 @@ nav ul {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   width: fit-content;
-  box-shadow: 0 10px 20px var(--shadow-hover)
+  box-shadow: 0 10px 20px var(--shadow-hover);
 }
 
 .filter-btn {
